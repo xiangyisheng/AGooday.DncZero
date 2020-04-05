@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AGooday.DncZero.Application\AGooday.DncZero.Application.csproj" />
+    <ProjectReference Include="..\AGooday.DncZero.Common\AGooday.DncZero.Common.csproj" />
+    <ProjectReference Include="..\AGooday.DncZero.Infrastructure.Identity\AGooday.DncZero.Infrastructure.Identity.csproj" />
+  </ItemGroup>
+
+
+
+</Project>
