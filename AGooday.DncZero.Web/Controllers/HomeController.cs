@@ -40,7 +40,7 @@ namespace AGooday.DncZero.Web.Controllers
             return View(users);
         }
 
-        // GET: Student/Details/5
+        // GET: Users/Details/5
         public ActionResult Details(Guid? id)
         {
             if (id == null)
@@ -48,17 +48,17 @@ namespace AGooday.DncZero.Web.Controllers
                 return NotFound();
             }
 
-            var studentViewModel = _usersAppService.GetById(id.Value);
+            var usersViewModel = _usersAppService.GetById(id.Value);
 
-            if (studentViewModel == null)
+            if (usersViewModel == null)
             {
                 return NotFound();
             }
 
-            return View(studentViewModel);
+            return View(usersViewModel);
         }
 
-        // GET: Student/Create
+        // GET: Users/Create
         // 页面
         [Authorize(Policy = "CanWriteUsersData")]
         public ActionResult Create()
@@ -66,7 +66,7 @@ namespace AGooday.DncZero.Web.Controllers
             return View();
         }
 
-        // POST: Student/Create
+        // POST: Users/Create
         // 方法
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -83,20 +83,20 @@ namespace AGooday.DncZero.Web.Controllers
 
                 #region 删除命令验证
                 ////添加命令验证
-                //RegisterStudentCommand registerStudentCommand = new RegisterStudentCommand(studentViewModel.Name, studentViewModel.Email, studentViewModel.BirthDate, studentViewModel.Phone);
+                //RegisterusersCommand registerusersCommand = new RegisterusersCommand(usersViewModel.Name, usersViewModel.Email, usersViewModel.BirthDate, usersViewModel.Phone);
 
                 ////如果命令无效，证明有错误
-                //if (!registerStudentCommand.IsValid())
+                //if (!registerusersCommand.IsValid())
                 //{
                 //    List<string> errorInfo = new List<string>();
                 //    //获取到错误，请思考这个Result从哪里来的 
-                //    foreach (var error in registerStudentCommand.ValidationResult.Errors)
+                //    foreach (var error in registerusersCommand.ValidationResult.Errors)
                 //    {
                 //        errorInfo.Add(error.ErrorMessage);
                 //    }
                 //    //对错误进行记录，还需要抛给前台
                 //    ViewBag.ErrorData = errorInfo;
-                //    return View(studentViewModel);
+                //    return View(usersViewModel);
                 //} 
                 #endregion
 
@@ -108,7 +108,7 @@ namespace AGooday.DncZero.Web.Controllers
 
                 // 是否存在消息通知
                 if (!_notifications.HasNotifications())
-                    ViewBag.Sucesso = "Student Registered!";
+                    ViewBag.Sucesso = "Users Registered!";
 
                 return View(usersViewModel);
             }
@@ -118,7 +118,7 @@ namespace AGooday.DncZero.Web.Controllers
             }
         }
 
-        // GET: Student/Edit/5
+        // GET: Users/Edit/5
         [HttpGet]
         [Authorize(Policy = "CanWriteUsersData")]
         public IActionResult Edit(Guid? id)
@@ -128,17 +128,17 @@ namespace AGooday.DncZero.Web.Controllers
                 return NotFound();
             }
 
-            var studentViewModel = _usersAppService.GetById(id.Value);
+            var usersViewModel = _usersAppService.GetById(id.Value);
 
-            if (studentViewModel == null)
+            if (usersViewModel == null)
             {
                 return NotFound();
             }
 
-            return View(studentViewModel);
+            return View(usersViewModel);
         }
 
-        // POST: Student/Edit/5
+        // POST: Users/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Policy = "CanWriteUsersData")]
@@ -149,12 +149,12 @@ namespace AGooday.DncZero.Web.Controllers
             _usersAppService.Update(usersViewModel);
 
             if (!_notifications.HasNotifications())
-                ViewBag.Sucesso = "Student Updated!";
+                ViewBag.Sucesso = "Users Updated!";
 
             return View(usersViewModel);
         }
 
-        // GET: Student/Delete/5
+        // GET: Users/Delete/5
         [Authorize(Policy = "CanWriteOrRemoveUsersData")]
         public IActionResult Delete(Guid? id)
         {
@@ -163,17 +163,17 @@ namespace AGooday.DncZero.Web.Controllers
                 return NotFound();
             }
 
-            var studentViewModel = _usersAppService.GetById(id.Value);
+            var usersViewModel = _usersAppService.GetById(id.Value);
 
-            if (studentViewModel == null)
+            if (usersViewModel == null)
             {
                 return NotFound();
             }
 
-            return View(studentViewModel);
+            return View(usersViewModel);
         }
 
-        // POST: Student/Delete/5
+        // POST: Users/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Policy = "CanWriteOrRemoveUsersData")]
@@ -184,15 +184,15 @@ namespace AGooday.DncZero.Web.Controllers
             if (!_notifications.HasNotifications())
                 return View(_usersAppService.GetById(id));
 
-            ViewBag.Sucesso = "Student Removed!";
+            ViewBag.Sucesso = "Users Removed!";
             return RedirectToAction("Index");
         }
 
         [Route("history/{id:guid}")]
         public JsonResult History(Guid id)
         {
-            var studentHistoryData = _usersAppService.GetAllHistory(id);
-            return Json(studentHistoryData);
+            var usersHistoryData = _usersAppService.GetAllHistory(id);
+            return Json(usersHistoryData);
         }
 
         public IActionResult Privacy()

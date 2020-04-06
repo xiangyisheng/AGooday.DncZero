@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AGooday.DncZero.Infrastructure\AGooday.DncZero.Infrastructure.csproj" />
+    <ProjectReference Include="..\AGooday.DncZero.Infrastructure.Identity\AGooday.DncZero.Infrastructure.Identity.csproj" />
   </ItemGroup>
 
 </Project>

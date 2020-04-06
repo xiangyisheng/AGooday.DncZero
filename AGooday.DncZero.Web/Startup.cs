@@ -24,13 +24,13 @@ namespace AGooday.DncZero.Web
     public class Startup
     {
         /*
-         一、迁移项目1（一定要切换到 Christ3D.Infrastruct 项目下，使用 Package Manager Console）：
-           1、add-migration InitStudentDb -Context StudyContext 
+         一、迁移项目1（一定要切换到 AGooday.DncZero.Infrastructure 项目下，使用 Package Manager Console）：
+           1、add-migration InitStudentDb -Context DncZeroDbContext 
            2、add-migration InitEventStoreDb -Context EventStoreSQLContext -o Migrations/EventStore
-           3、update-database -Context StudyContext
+           3、update-database -Context DncZeroDbContext
            4、update-database -Context EventStoreSQLContext
 
-         二、迁移项目2（一定要切换到 Christ3D.Infrastruct.Identity 项目下，使用 Package Manager Console）：
+         二、迁移项目2（一定要切换到 AGooday.DncZero.Infrastructure.Identity 项目下，使用 Package Manager Console）：
            1、add-migration InitIdentityDb -Context ApplicationDbContext -o Data/Migrations/ 
            2、update-database -Context ApplicationDbContext
              
@@ -65,22 +65,22 @@ namespace AGooday.DncZero.Web
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            //services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            //    .AddCookie(o =>
-            //    {
-            //        o.LoginPath = new PathString("/login");
-            //        o.AccessDeniedPath = new PathString("/home/access-denied");
-            //    })//;
-            //    .AddFacebook(o =>
-            //    {
-            //        o.AppId = Configuration["Authentication:Facebook:AppId"];
-            //        o.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
-            //    })
-            //    .AddGoogle(googleOptions =>
-            //    {
-            //        googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
-            //        googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
-            //    });
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(o =>
+                {
+                    o.LoginPath = new PathString("/login");
+                    o.AccessDeniedPath = new PathString("/home/access-denied");
+                });
+                //.AddFacebook(o =>
+                //{
+                //    o.AppId = Configuration["Authentication:Facebook:AppId"];
+                //    o.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+                //})
+                //.AddGoogle(googleOptions =>
+                //{
+                //    googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
+                //    googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+                //});
 
             // Automapper 注入
             services.AddAutoMapperSetup();

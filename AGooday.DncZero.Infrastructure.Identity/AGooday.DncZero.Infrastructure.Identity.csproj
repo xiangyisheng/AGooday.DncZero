@@ -9,15 +9,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="3.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AGooday.DncZero.Common\AGooday.DncZero.Common.csproj" />
-    <ProjectReference Include="..\AGooday.DncZero.Domain\AGooday.DncZero.Domain.csproj" />
+    <ProjectReference Include="..\AGooday.DncZero.Infrastructure\AGooday.DncZero.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
