@@ -57,30 +57,30 @@ namespace AGooday.DncZero.Web
             services.AddSingleton(new Appsettings(Env.ContentRootPath));
 
             services.AddDbContext<ApplicationDbContext>(options =>
-               //options.UseSqlServer(BaseDBConfig.GetConnectionString(Configuration.GetConnectionString("DefaultConnection_file"), Configuration.GetConnectionString("DefaultConnection")))
+               //options.UseSqlServer(BaseDBConfig.GetConnectionString(Configuration.GetConnectionString("DefaultConnectionFile"), Configuration.GetConnectionString("DefaultConnection")))
                options.UseSqlServer(BaseDBConfig.ConnectionString)
             );
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+            //services.AddIdentity<ApplicationUser, IdentityRole>()
+            //    .AddEntityFrameworkStores<ApplicationDbContext>()
+            //    .AddDefaultTokenProviders();
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(o =>
-                {
-                    o.LoginPath = new PathString("/login");
-                    o.AccessDeniedPath = new PathString("/home/access-denied");
-                });
-                //.AddFacebook(o =>
-                //{
-                //    o.AppId = Configuration["Authentication:Facebook:AppId"];
-                //    o.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
-                //})
-                //.AddGoogle(googleOptions =>
-                //{
-                //    googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
-                //    googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
-                //});
+            //services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            //    .AddCookie(o =>
+            //    {
+            //        o.LoginPath = new PathString("/login");
+            //        o.AccessDeniedPath = new PathString("/home/access-denied");
+            //    });
+            //    //.AddFacebook(o =>
+            //    //{
+            //    //    o.AppId = Configuration["Authentication:Facebook:AppId"];
+            //    //    o.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+            //    //})
+            //    //.AddGoogle(googleOptions =>
+            //    //{
+            //    //    googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
+            //    //    googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+            //    //});
 
             // Automapper 注入
             services.AddAutoMapperSetup();
@@ -88,12 +88,12 @@ namespace AGooday.DncZero.Web
             //services.AddControllersWithViews();
             services.AddMvc();
 
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("CanWriteUsersData", policy => policy.Requirements.Add(new ClaimRequirement("Users", "Write")));
-                options.AddPolicy("CanRemoveUsersData", policy => policy.Requirements.Add(new ClaimRequirement("Users", "Remove")));
-                options.AddPolicy("CanWriteOrRemoveUsersData", policy => policy.Requirements.Add(new ClaimRequirement("Users", "WriteOrRemove")));
-            });
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("CanWriteUsersData", policy => policy.Requirements.Add(new ClaimRequirement("Users", "Write")));
+            //    options.AddPolicy("CanRemoveUsersData", policy => policy.Requirements.Add(new ClaimRequirement("Users", "Remove")));
+            //    options.AddPolicy("CanWriteOrRemoveUsersData", policy => policy.Requirements.Add(new ClaimRequirement("Users", "WriteOrRemove")));
+            //});
 
             // Adding MediatR for Domain Events
             // 领域命令、领域事件等注入
@@ -120,7 +120,7 @@ namespace AGooday.DncZero.Web
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            //app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

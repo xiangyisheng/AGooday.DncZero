@@ -60,7 +60,7 @@ namespace AGooday.DncZero.Web.Controllers
 
         // GET: Users/Create
         // 页面
-        [Authorize(Policy = "CanWriteUsersData")]
+        //[Authorize(Policy = "CanWriteUsersData")]
         public ActionResult Create()
         {
             return View();
@@ -70,7 +70,7 @@ namespace AGooday.DncZero.Web.Controllers
         // 方法
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Policy = "CanWriteUsersData")]
+        //[Authorize(Policy = "CanWriteUsersData")]
         public ActionResult Create(UsersViewModel usersViewModel)
         {
             try
@@ -120,7 +120,7 @@ namespace AGooday.DncZero.Web.Controllers
 
         // GET: Users/Edit/5
         [HttpGet]
-        [Authorize(Policy = "CanWriteUsersData")]
+        //[Authorize(Policy = "CanWriteUsersData")]
         public IActionResult Edit(Guid? id)
         {
             if (id == null)
@@ -141,7 +141,7 @@ namespace AGooday.DncZero.Web.Controllers
         // POST: Users/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Policy = "CanWriteUsersData")]
+        //[Authorize(Policy = "CanWriteUsersData")]
         public IActionResult Edit(UsersViewModel usersViewModel)
         {
             if (!ModelState.IsValid) return View(usersViewModel);
@@ -155,7 +155,7 @@ namespace AGooday.DncZero.Web.Controllers
         }
 
         // GET: Users/Delete/5
-        [Authorize(Policy = "CanWriteOrRemoveUsersData")]
+        //[Authorize(Policy = "CanWriteOrRemoveUsersData")]
         public IActionResult Delete(Guid? id)
         {
             if (id == null)
@@ -176,7 +176,7 @@ namespace AGooday.DncZero.Web.Controllers
         // POST: Users/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Policy = "CanWriteOrRemoveUsersData")]
+        //[Authorize(Policy = "CanWriteOrRemoveUsersData")]
         public IActionResult DeleteConfirmed(Guid id)
         {
             _usersAppService.Remove(id);
