@@ -7,9 +7,9 @@ namespace AGooday.DncZero.Domain.Core.Models
     /// <summary>
     /// 定义可排序领域实体基类
     /// </summary>
-    public abstract class SortableEntity<TSort, TPrimaryKey> : Entity<TPrimaryKey>
-        where TSort : struct
+    public abstract class SortableEntity<TPrimaryKey, TSort> : Entity<TPrimaryKey>
         where TPrimaryKey : struct
+        where TSort : struct
     {
         /// <summary>
         /// 排序号

@@ -23,22 +23,90 @@ namespace AGooday.DncZero.Application.AutoMapper
 
             //手动进行配置
             CreateMap<UsersViewModel, Users>()
-             .ForPath(d => d.Address.Province, o => o.MapFrom(s => s.Province))
-             .ForPath(d => d.Address.City, o => o.MapFrom(s => s.City))
-             .ForPath(d => d.Address.County, o => o.MapFrom(s => s.County))
-             .ForPath(d => d.Address.Street, o => o.MapFrom(s => s.Street))
-             ;
+                .ForPath(d => d.Address.Province, o => o.MapFrom(s => s.Province))
+                .ForPath(d => d.Address.City, o => o.MapFrom(s => s.City))
+                .ForPath(d => d.Address.County, o => o.MapFrom(s => s.County))
+                .ForPath(d => d.Address.Street, o => o.MapFrom(s => s.Street))
+                .ForPath(d => d.Address.Detailed, o => o.MapFrom(s => s.Detailed))
+                ;
 
             //这里以后会写领域命令，所以不能和DomainToViewModelMappingProfile写在一起。
             //Users视图模型 -> 添加新Users命令模型
             CreateMap<UsersViewModel, RegisterUsersCommand>()
-                .ConstructUsing(c => new RegisterUsersCommand(c.NickName, c.Surname, c.Name, c.RealName, c.Email, c.BirthDate, c.Phone, c.Province, c.City,
-            c.County, c.Street));
+                .ConstructUsing(c => new RegisterUsersCommand(
+                    c.Type,
+                    c.MtypeId,
+                    c.NickName,
+                    c.Surname,
+                    c.Name,
+                    c.RealName,
+                    c.Phone,
+                    c.Email,
+                    c.BirthDate,
+                    c.Sex,
+                    c.Age,
+                    c.Gravatar,
+                    c.Avatar,
+                    c.Motto,
+                    c.Bio,
+                    c.Idcard,
+                    c.Major,
+                    c.Polity,
+                    c.NowState,
+                    c.State,
+                    c.Province, c.City, c.County, c.Street, c.Detailed,
+                    c.Company,
+                    c.Website,
+                    c.Weibo,
+                    c.Blog,
+                    c.Url,
+                    c.RegisterTime,
+                    c.RegisterIp,
+                    c.LastLoginTime,
+                    c.LastLoginIp,
+                    c.LastModifiedTime,
+                    c.LastModifiedIp,
+                    c.Sort
+                    ));
 
             //Users视图模型 -> 更新Users信息命令模型
             CreateMap<UsersViewModel, UpdateUsersCommand>()
-                .ConstructUsing(c => new UpdateUsersCommand(c.Id, c.NickName, c.Surname, c.Name, c.RealName, c.Email, c.BirthDate, c.Phone, c.Province, c.City,
-            c.County, c.Street));
+                .ConstructUsing(c => new UpdateUsersCommand(
+                    c.Id,
+                    c.Type,
+                    c.MtypeId,
+                    c.NickName,
+                    c.Surname,
+                    c.Name,
+                    c.RealName,
+                    c.Phone,
+                    c.Email,
+                    c.BirthDate,
+                    c.Sex,
+                    c.Age,
+                    c.Gravatar,
+                    c.Avatar,
+                    c.Motto,
+                    c.Bio,
+                    c.Idcard,
+                    c.Major,
+                    c.Polity,
+                    c.NowState,
+                    c.State,
+                    c.Province, c.City, c.County, c.Street, c.Detailed,
+                    c.Company,
+                    c.Website,
+                    c.Weibo,
+                    c.Blog,
+                    c.Url,
+                    c.RegisterTime,
+                    c.RegisterIp,
+                    c.LastLoginTime,
+                    c.LastLoginIp,
+                    c.LastModifiedTime,
+                    c.LastModifiedIp,
+                    c.Sort
+                    ));
         }
     }
 }

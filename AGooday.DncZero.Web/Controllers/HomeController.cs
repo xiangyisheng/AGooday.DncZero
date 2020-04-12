@@ -69,7 +69,7 @@ namespace AGooday.DncZero.Web.Controllers
         // POST: Users/Create
         // 方法
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         //[Authorize(Policy = "CanWriteUsersData")]
         public ActionResult Create(UsersViewModel usersViewModel)
         {
@@ -140,7 +140,7 @@ namespace AGooday.DncZero.Web.Controllers
 
         // POST: Users/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         //[Authorize(Policy = "CanWriteUsersData")]
         public IActionResult Edit(UsersViewModel usersViewModel)
         {
@@ -175,7 +175,7 @@ namespace AGooday.DncZero.Web.Controllers
 
         // POST: Users/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         //[Authorize(Policy = "CanWriteOrRemoveUsersData")]
         public IActionResult DeleteConfirmed(Guid id)
         {

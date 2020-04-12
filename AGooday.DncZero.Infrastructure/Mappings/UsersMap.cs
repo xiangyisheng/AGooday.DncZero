@@ -8,7 +8,7 @@ using System.Text;
 namespace AGooday.DncZero.Infrastructure.Mappings
 {
     /// <summary>
-    /// 订单map类
+    /// 用户map类
     /// </summary>
     public class UsersMap : IEntityTypeConfiguration<Users>
     {
@@ -56,10 +56,11 @@ namespace AGooday.DncZero.Infrastructure.Mappings
             //    o => o.Address,
             //    sa =>
             //    {
-            //        sa.Property(p => p.County).HasColumnName("County");
             //        sa.Property(p => p.Province).HasColumnName("Province");
             //        sa.Property(p => p.City).HasColumnName("City");
+            //        sa.Property(p => p.County).HasColumnName("County");
             //        sa.Property(p => p.Street).HasColumnName("Street");
+            //        sa.Property(p => p.Detailed).HasColumnName("Detailed");
             //    }
             //);
 

@@ -1,13 +1,13 @@
-﻿using AGooday.DncZero.Domain.Core.Commands;
+﻿using AGooday.DncZero.Domain.Core.Events;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AGooday.DncZero.Domain.Commands.Users
+namespace AGooday.DncZero.Domain.Events.Users
 {
-    public abstract class UsersCommand : Command
+    public abstract class UsersEvent: Event
     {
-        public Guid Id { get; protected set; }
+        public Guid Id { get; set; }
         /// <summary>
         /// 用户类型(0:系统 1:普通)
         /// </summary>

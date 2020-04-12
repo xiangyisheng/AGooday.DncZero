@@ -8,6 +8,20 @@
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
 
+<div class="row">
+    <div class="col-md-12">
+        <div>
+            <div class="pull-left">
+                <a asp-action="Create" class="btn btn-primary">
+                    <span title="Register New" class="glyphicon glyphicon-plus-sign"></span> Register New
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+
 <div class="panel panel-default">
     <table class="table table-striped">
         <thead>
@@ -27,7 +41,7 @@
                 <th>
                     @Html.DisplayNameFor(model => model.BirthDate)
                 </th>
-                <th>Address</th>
+                <th>家庭住址</th>
                 <th></th>
             </tr>
         </thead>

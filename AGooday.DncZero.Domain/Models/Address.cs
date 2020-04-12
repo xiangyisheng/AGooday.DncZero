@@ -32,18 +32,22 @@ namespace AGooday.DncZero.Domain.Models
         /// </summary>
         public string Street { get; private set; }
 
+        /// <summary>
+        /// 详细
+        /// </summary>
+        public string Detailed { get; private set; }
 
         public Address() { }
+
         public Address(string province, string city,
-            string county, string street)
+            string county, string street, string detailed = null)
         {
             this.Province = province;
             this.City = city;
             this.County = county;
             this.Street = street;
+            this.Detailed = detailed;
         }
-
-
 
         protected override bool EqualsCore(Address other)
         {

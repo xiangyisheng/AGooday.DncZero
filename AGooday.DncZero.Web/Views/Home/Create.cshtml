@@ -1,22 +1,22 @@
 ﻿@model UsersViewModel
 @{
-    ViewData["Title"] = "Edit Users";
+    ViewData["Title"] = "Register New Users";
 }
 <h2>@ViewData["Title"]</h2>
-<form asp-action="Edit" method="post">
+<form asp-action="Create" method="post">
     <div class="form-horizontal">
         <hr />
-        <input type="hidden" asp-for="Id" />
+        <!--<input type="hidden" asp-for="Id" />
         <input type="hidden" asp-for="Type" />
         <input type="hidden" asp-for="MtypeId" />
         @*<input type="hidden" asp-for="NickName" />
-            <input type="hidden" asp-for="Surname" />
-            <input type="hidden" asp-for="Name" />
-            <input type="hidden" asp-for="RealName" />
-            @*<input type="hidden" asp-for="Phone" />
-            <input type="hidden" asp-for="Email" />
-            <input type="hidden" asp-for="BirthDate" />
-            <input type="hidden" asp-for="Sex" />*@
+        <input type="hidden" asp-for="Surname" />
+        <input type="hidden" asp-for="Name" />
+        <input type="hidden" asp-for="RealName" />
+        @*<input type="hidden" asp-for="Phone" />
+        <input type="hidden" asp-for="Email" />
+        <input type="hidden" asp-for="BirthDate" />
+        <input type="hidden" asp-for="Sex" />*@
         <input type="hidden" asp-for="Age" />
         <input type="hidden" asp-for="Gravatar" />
         <input type="hidden" asp-for="Avatar" />
@@ -28,10 +28,10 @@
         <input type="hidden" asp-for="NowState" />
         <input type="hidden" asp-for="State" />
         @*<input type="hidden" asp-for="Province" />
-            <input type="hidden" asp-for="City" />
-            <input type="hidden" asp-for="County" />
-            <input type="hidden" asp-for="Street" />
-            <input type="hidden" asp-for="Detailed" />*@
+        <input type="hidden" asp-for="City" />
+        <input type="hidden" asp-for="County" />
+        <input type="hidden" asp-for="Street" />
+        <input type="hidden" asp-for="Detailed" />*@
         <input type="hidden" asp-for="Company" />
         <input type="hidden" asp-for="Website" />
         <input type="hidden" asp-for="Weibo" />
@@ -43,8 +43,9 @@
         <input type="hidden" asp-for="LastLoginIp" />
         <input type="hidden" asp-for="LastModifiedTime" />
         <input type="hidden" asp-for="LastModifiedIp" />
-        <input type="hidden" asp-for="Sort" />
-
+        <input type="hidden" asp-for="Sort" />-->
+        @* https://docs.microsoft.com/zh-cn/aspnet/core/mvc/views/tag-helpers/intro?view=aspnetcore-3.1 *@
+        @* https://docs.microsoft.com/zh-cn/aspnet/core/mvc/views/view-components?view=aspnetcore-3.1 *@
         @* Replacing classic Validation Summary to Custom ViewComponent as TagHelper *@
         @* 翻译：将经典验证摘要替换为自定义视图组件作为标记助手 *@
 

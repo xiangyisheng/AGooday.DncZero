@@ -12,9 +12,9 @@ namespace AGooday.DncZero.Infrastructure.Repository
     /// 泛型仓储，实现泛型仓储接口
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    public class Repository<TEntity,TKey> : IRepository<TEntity, TKey>
+    public class Repository<TEntity,TPrimaryKey> : IRepository<TEntity, TPrimaryKey>
         where TEntity : class
-        where TKey : struct
+        where TPrimaryKey : struct
     {
         protected readonly DncZeroDbContext Db;
         protected readonly DbSet<TEntity> DbSet;
@@ -38,7 +38,7 @@ namespace AGooday.DncZero.Infrastructure.Repository
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public virtual TEntity GetById(TKey id)
+        public virtual TEntity GetById(TPrimaryKey id)
         {
             return DbSet.Find(id);
         }

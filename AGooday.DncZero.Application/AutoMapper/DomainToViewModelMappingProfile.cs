@@ -24,6 +24,7 @@ namespace AGooday.DncZero.Application.AutoMapper
                 .ForMember(d => d.Province, o => o.MapFrom(s => s.Address.Province))
                 .ForMember(d => d.City, o => o.MapFrom(s => s.Address.City))
                 .ForMember(d => d.Street, o => o.MapFrom(s => s.Address.Street))
+                .ForMember(d => d.Detailed, o => o.MapFrom(s => s.Address.Detailed))
                 ;
         }
     }

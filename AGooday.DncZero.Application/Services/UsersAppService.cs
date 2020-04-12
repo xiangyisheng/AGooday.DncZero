@@ -70,7 +70,8 @@ namespace AGooday.DncZero.Application.Services
 
             //_UsersRepository.Add(_mapper.Map<Users>(UsersViewModel));
             //_UsersRepository.SaveChanges();
-
+            var sort = UsersViewModel.Sort;
+            UsersViewModel.Sort = sort == null ? 1 : sort;
             var registerCommand = _mapper.Map<RegisterUsersCommand>(UsersViewModel);
             Bus.SendCommand(registerCommand);
         }

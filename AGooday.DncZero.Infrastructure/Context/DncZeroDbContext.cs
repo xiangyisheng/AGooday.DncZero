@@ -13,6 +13,7 @@ namespace AGooday.DncZero.Infrastructure.Context
     public class DncZeroDbContext : DbContext
     {
         public DbSet<Users> Users { get; set; }
+        public DbSet<UserAuths> UserAuths { get; set; }
         /// <summary>
         /// 重写自定义Map配置
         /// </summary>
@@ -21,6 +22,7 @@ namespace AGooday.DncZero.Infrastructure.Context
         {
             //对 UsersMap 进行配置
             modelBuilder.ApplyConfiguration(new UsersMap());
+            modelBuilder.ApplyConfiguration(new UserAuthsMap());
 
             base.OnModelCreating(modelBuilder);
         }

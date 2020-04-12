@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AGooday.DncZero.Common\AGooday.DncZero.Common.csproj" />
     <ProjectReference Include="..\AGooday.DncZero.Domain.Core\AGooday.DncZero.Domain.Core.csproj" />
   </ItemGroup>
 

@@ -86,7 +86,13 @@ namespace AGooday.DncZero.Web
             services.AddAutoMapperSetup();
 
             //services.AddControllersWithViews();
-            services.AddMvc();
+            services.AddMvc()
+                //.AddRazorOptions(options =>
+                //{
+                //    //修改 Razor 的 ViewLocationFormats 集合，以自定义视图搜索路径。 例如，将新项添加到集合，以搜索路径“/Components/{视图组件名称}/{视图名称}”中的视图
+                //    options.ViewLocationFormats.Add("/{0}.cshtml");//占位符“{0}”表示路径“Components/{视图组件名称}/{视图名称}”
+                //})
+                ;
 
             //services.AddAuthorization(options =>
             //{

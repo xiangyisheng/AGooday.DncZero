@@ -9,9 +9,9 @@ namespace AGooday.DncZero.Domain.Interfaces
     /// 定义泛型仓储接口，并继承IDisposable，显式释放资源
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    public interface IRepository<TEntity, TKey> : IDisposable
+    public interface IRepository<TEntity, TPrimaryKey> : IDisposable
         where TEntity : class
-        where TKey : struct
+        where TPrimaryKey : struct
     {
         /// <summary>
         /// 添加
@@ -23,7 +23,7 @@ namespace AGooday.DncZero.Domain.Interfaces
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        TEntity GetById(TKey id);
+        TEntity GetById(TPrimaryKey id);
         /// <summary>
         /// 获取列表
         /// </summary>
