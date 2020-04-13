@@ -12,8 +12,61 @@ namespace AGooday.DncZero.Infrastructure.Context
 {
     public class DncZeroDbContext : DbContext
     {
+        #region
+        /// <summary>
+        /// 用户信息
+        /// </summary>
         public DbSet<Users> Users { get; set; }
+        /// <summary>
+        /// 用户授权
+        /// </summary>
         public DbSet<UserAuths> UserAuths { get; set; }
+        /// <summary>
+        /// 用户组
+        /// </summary>
+        public DbSet<UserGroups> UserGroups { get; set; }
+        /// <summary>
+        /// 用户用户组关联
+        /// </summary>
+        public DbSet<UserGroupRelation> UserGroupRelation { get; set; }
+        /// <summary>
+        /// 用户角色关联
+        /// </summary>
+        public DbSet<UserRoleRelation> UserRoleRelation { get; set; }
+        /// <summary>
+        /// 用户ID
+        /// </summary>
+        public DbSet<UserPermissionRelation> UserPermissionRelation { get; set; }
+        /// <summary>
+        /// 角色信息
+        /// </summary>
+        public DbSet<Roles> Roles { get; set; }
+        /// <summary>
+        /// 角色权限关联
+        /// </summary>
+        public DbSet<RolePermissionRelation> RolePermissionRelation { get; set; }
+        /// <summary>
+        /// 用户组角色关联
+        /// </summary>
+        public DbSet<GroupRoleRelation> GroupRoleRelation { get; set; }
+        /// <summary>
+        /// 权限项
+        /// </summary>
+        public DbSet<Permissions> Permissions { get; set; }
+        /// <summary>
+        /// 操作日志
+        /// </summary>
+        public DbSet<OperateLogs> OperateLogs { get; set; }
+        /// <summary>
+        /// 菜单
+        /// </summary>
+        public DbSet<Menus> Menus { get; set; }
+        /// <summary>
+        /// 数据日志
+        /// </summary>
+        public DbSet<DataLogs> DataLogs { get; set; } 
+        #endregion
+
         /// <summary>
         /// 重写自定义Map配置
         /// </summary>
