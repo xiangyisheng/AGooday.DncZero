@@ -8,7 +8,7 @@ namespace AGooday.DncZero.Domain.Models
     /// <summary>
     /// 角色信息
     /// </summary>
-    public class Roles : Entity<Guid>
+    public class Roles : SortableEntity<Guid, long>
     {
         /// <summary>
         /// 角色名

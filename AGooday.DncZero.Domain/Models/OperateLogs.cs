@@ -5,7 +5,30 @@ using System.Text;
 
 namespace AGooday.DncZero.Domain.Models
 {
-    public class OperateLogs : Entity<int>
+    /// <summary>
+    /// 操作日志
+    /// </summary>
+    public class OperateLogs : Entity<Guid>
     {
+        /// <summary>
+        /// 名称
+        /// </summary>
+        public string Name { get; private set; }
+        /// <summary>
+        /// IP地址
+        /// </summary>
+        public string IP { get; private set; }
+        /// <summary>
+        /// Url地址
+        /// </summary>
+        public string Url { get; private set; }
+        /// <summary>
+        /// 操作人
+        /// </summary>
+        public string Operator { get; private set; }
+        /// <summary>
+        /// 创建时间
+        /// </summary>
+        public DateTime CreatedTime { get; private set; }
     }
 }
