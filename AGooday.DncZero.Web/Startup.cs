@@ -104,7 +104,9 @@ namespace AGooday.DncZero.Web
             // Adding MediatR for Domain Events
             // 领域命令、领域事件等注入
             // 引用包 MediatR.Extensions.Microsoft.DependencyInjection
-            services.AddMediatR(typeof(Startup));
+            //services.AddMediatR(typeof(MyxxxHandler));//单单注入某一个处理程序
+            //或
+            services.AddMediatR(typeof(Startup));//目的是为了扫描Handler的实现对象并添加到IOC的容器中
 
             // .NET Core 原生依赖注入
             // 单写一层用来添加依赖项，从展示层 Presentation 中隔离

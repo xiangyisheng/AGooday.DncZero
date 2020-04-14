@@ -15,6 +15,11 @@ using System.Threading.Tasks;
 
 namespace AGooday.DncZero.Domain.CommandHandlers
 {
+    /// <summary>
+    /// Users领域命令处理程序
+    /// 
+    /// IRequestHandler 也是通过结构类型Unit来处理不需要返回值的情况。
+    /// </summary>
     public class UsersCommandHandler : CommandHandler,
         IRequestHandler<RegisterUsersCommand, Unit>,
         IRequestHandler<UpdateUsersCommand, Unit>,

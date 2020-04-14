@@ -52,7 +52,7 @@ namespace AGooday.DncZero.Web.Extensions
             // 注入 应用层Application
             services.AddScoped<IUsersAppService, UsersAppService>();
 
-            // 命令总线Domain Bus (Mediator)
+            // 命令总线Domain Bus (Mediator) 中介总线接口
             services.AddScoped<IMediatorHandler, InMemoryBus>();
 
             // Domain - Events
