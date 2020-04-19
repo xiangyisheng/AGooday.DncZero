@@ -18,5 +18,15 @@ namespace AGooday.DncZero.Domain.Interfaces
         /// <returns></returns>
         Users GetByName(string name);
         Users GetByEmail(string email);
+
+        /// <summary>
+        /// 是否拥有此权限
+        /// </summary>
+        /// <param name="userId">用户ID</param>
+        /// <param name="url">Url</param>
+        /// <returns></returns>
+        bool HasMenusAuthority(Guid userId, string url);
+
+        IList<Menus> GetAllMenus(Guid userId);
     }
 }

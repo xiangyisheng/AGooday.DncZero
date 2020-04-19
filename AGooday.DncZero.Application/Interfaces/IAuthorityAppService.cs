@@ -7,19 +7,12 @@ using System.Text;
 namespace AGooday.DncZero.Application.Interfaces
 {
     /// <summary>
-    /// 定义 IUsersAppService 服务接口
+    /// 定义 IAuthorityAppService 服务接口
     /// 并继承IDisposable，显式释放资源
     /// 注意这里我们使用的对象，是视图对象模型
     /// </summary>
-    public interface IUsersAppService : IDisposable
+    public interface IAuthorityAppService : IDisposable
     {
-        void Register(UsersViewModel UsersViewModel);
-        IEnumerable<UsersViewModel> GetAll();
-        UsersViewModel GetById(Guid id);
-        void Update(UsersViewModel UsersViewModel);
-        void Remove(Guid id);
-        IList<UsersHistoryData> GetAllHistory(Guid id);
-
         /// <summary>
         /// 是否拥有此权限
         /// </summary>
@@ -27,6 +20,5 @@ namespace AGooday.DncZero.Application.Interfaces
         /// <param name="url">Url</param>
         /// <returns></returns>
         bool HasMenusAuthority(Guid userId, string url);
-        IList<MenusViewModel> GetAllMenus(Guid userId);
     }
 }

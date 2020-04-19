@@ -12,7 +12,7 @@ namespace AGooday.DncZero.Infrastructure.Context
 {
     public class DncZeroDbContext : DbContext
     {
-        #region
+        #region DbSets
         /// <summary>
         /// 用户信息
         /// </summary>
@@ -24,7 +24,7 @@ namespace AGooday.DncZero.Infrastructure.Context
         /// <summary>
         /// 用户组
         /// </summary>
-        public DbSet<UserGroups> UserGroups { get; set; }
+        public DbSet<Groups> UserGroups { get; set; }
         /// <summary>
         /// 用户用户组关联
         /// </summary>
@@ -62,11 +62,20 @@ namespace AGooday.DncZero.Infrastructure.Context
         /// </summary>
         public DbSet<Menus> Menus { get; set; }
         /// <summary>
+        /// 菜单
+        /// </summary>
+        public DbSet<Functions> Functions { get; set; }
+        /// <summary>
         /// 数据日志
         /// </summary>
-        public DbSet<DataLogs> DataLogs { get; set; } 
+        public DbSet<DataLogs> DataLogs { get; set; }
         #endregion
 
+        //执行
+        public DncZeroDbContext(DbContextOptions<DncZeroDbContext> options)
+            : base(options)
+        {
+        }
         /// <summary>
         /// 重写自定义Map配置
         /// </summary>
@@ -103,10 +112,12 @@ namespace AGooday.DncZero.Infrastructure.Context
             #endregion
 
             #region
-            optionsBuilder
-                // 安装NuGet包 Microsoft.EntityFrameworkCore.SqlServer
-                .UseSqlServer(BaseDBConfig.ConnectionString);
+            //optionsBuilder
+            //    // 安装NuGet包 Microsoft.EntityFrameworkCore.SqlServer
+            //    .UseSqlServer(BaseDBConfig.ConnectionString);
             #endregion
+
+            base.OnConfiguring(optionsBuilder);
         }
     }
 }

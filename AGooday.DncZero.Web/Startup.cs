@@ -18,6 +18,9 @@ using AGooday.DncZero.Infrastructure.Identity.Data;
 using AGooday.DncZero.Common.DB;
 using AGooday.DncZero.Infrastructure.Identity.Models;
 using AGooday.DncZero.Infrastructure.Identity.Authorization;
+using AGooday.DncZero.Infrastructure.Context;
+using AGooday.DncZero.Common.Enumerator;
+using AGooday.DncZero.Web.Filters;
 
 namespace AGooday.DncZero.Web
 {
@@ -25,7 +28,7 @@ namespace AGooday.DncZero.Web
     {
         /*
          一、迁移项目1（一定要切换到 AGooday.DncZero.Infrastructure 项目下，使用 Package Manager Console）：
-           1、add-migration InitStudentDb -Context DncZeroDbContext 
+           1、add-migration InitDncZeroDb -Context DncZeroDbContext 
            2、add-migration InitEventStoreDb -Context EventStoreSQLContext -o Migrations/EventStore
            3、update-database -Context DncZeroDbContext
            4、update-database -Context EventStoreSQLContext
@@ -61,6 +64,34 @@ namespace AGooday.DncZero.Web
                options.UseSqlServer(BaseDBConfig.ConnectionString)
             );
 
+            switch (BaseDBConfig.DbType)
+            {
+                case DataBaseType.MySql:
+                    services.AddDbContext<DncZeroDbContext>(options =>
+                        options.UseMySql(BaseDBConfig.ConnectionString)
+                    );
+                    break;
+                case DataBaseType.SqlServer:
+                    services.AddDbContext<DncZeroDbContext>(options =>
+                        options.UseSqlServer(BaseDBConfig.ConnectionString)
+                    );
+                    break;
+                case DataBaseType.Sqlite:
+                    services.AddDbContext<DncZeroDbContext>(options =>
+                        options.UseSqlite(BaseDBConfig.ConnectionString)
+                    );
+                    break;
+                case DataBaseType.Oracle:
+                    break;
+                case DataBaseType.PostgreSQL:
+                    break;
+                default:
+                    services.AddDbContext<DncZeroDbContext>(options =>
+                        options.UseSqlServer(BaseDBConfig.ConnectionString)
+                    );
+                    break;
+            }
+
             //services.AddIdentity<ApplicationUser, IdentityRole>()
             //    .AddEntityFrameworkStores<ApplicationDbContext>()
             //    .AddDefaultTokenProviders();
@@ -86,7 +117,10 @@ namespace AGooday.DncZero.Web
             services.AddAutoMapperSetup();
 
             //services.AddControllersWithViews();
-            services.AddMvc()
+            services.AddMvc(cfg =>
+            {
+                cfg.Filters.Add(new AuthorityFilter());
+            })
                 //.AddRazorOptions(options =>
                 //{
                 //    //修改 Razor 的 ViewLocationFormats 集合，以自定义视图搜索路径。 例如，将新项添加到集合，以搜索路径“/Components/{视图组件名称}/{视图名称}”中的视图

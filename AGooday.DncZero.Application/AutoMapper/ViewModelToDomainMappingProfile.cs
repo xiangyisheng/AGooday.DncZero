@@ -107,6 +107,8 @@ namespace AGooday.DncZero.Application.AutoMapper
                     c.LastModifiedIp,
                     c.Sort
                     ));
+
+            CreateMap<MenusViewModel, Menus>();
         }
     }
 }

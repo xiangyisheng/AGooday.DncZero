@@ -23,7 +23,7 @@ namespace AGooday.DncZero.Application.Services
     public class UsersAppService : IUsersAppService
     {
         // 注意这里是要IoC依赖注入的，还没有实现
-        private readonly IUsersRepository _UsersRepository;
+        private readonly IUsersRepository _usersRepository;
         // 用来进行DTO
         private readonly IMapper _mapper;
         // 中介者 总线
@@ -32,13 +32,13 @@ namespace AGooday.DncZero.Application.Services
         private readonly IEventStoreRepository _eventStoreRepository;
 
         public UsersAppService(
-            IUsersRepository UsersRepository,
+            IUsersRepository usersRepository,
             IMapper mapper,
             IMediatorHandler bus,
             IEventStoreRepository eventStoreRepository
             )
         {
-            _UsersRepository = UsersRepository;
+            _usersRepository = usersRepository;
             _mapper = mapper;
             Bus = bus;
             _eventStoreRepository = eventStoreRepository;
@@ -52,7 +52,7 @@ namespace AGooday.DncZero.Application.Services
         public IEnumerable<UsersViewModel> GetAll()
         {
             //第一种写法 Map
-            return _mapper.Map<IEnumerable<UsersViewModel>>(_UsersRepository.GetAll());
+            return _mapper.Map<IEnumerable<UsersViewModel>>(_usersRepository.GetAll());
 
             //第二种写法 ProjectTo
             //return (_UsersRepository.GetAll()).ProjectTo<UsersViewModel>(_mapper.ConfigurationProvider);
@@ -60,7 +60,7 @@ namespace AGooday.DncZero.Application.Services
 
         public UsersViewModel GetById(Guid id)
         {
-            return _mapper.Map<UsersViewModel>(_UsersRepository.GetById(id));
+            return _mapper.Map<UsersViewModel>(_usersRepository.GetById(id));
         }
 
         public void Register(UsersViewModel UsersViewModel)
@@ -96,6 +96,22 @@ namespace AGooday.DncZero.Application.Services
         public IList<UsersHistoryData> GetAllHistory(Guid id)
         {
             return UsersHistory.ToJavaScriptStudentHistory(_eventStoreRepository.All(id));
+        }
+
+        /// <summary>
+        /// 是否拥有此权限
+        /// </summary>
+        /// <param name="userId">用户ID</param>
+        /// <param name="url">Url</param>
+        /// <returns></returns>
+        public bool HasMenusAuthority(Guid userId, string url)
+        {
+            return _usersRepository.HasMenusAuthority(userId, url);
+        }
+
+        public IList<MenusViewModel> GetAllMenus(Guid userId)
+        {
+            return _mapper.Map<IList<MenusViewModel>>(_usersRepository.GetAllMenus(userId));;
         }
     }
 }

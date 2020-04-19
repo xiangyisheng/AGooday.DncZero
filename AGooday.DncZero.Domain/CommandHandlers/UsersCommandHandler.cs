@@ -69,6 +69,7 @@ namespace AGooday.DncZero.Domain.CommandHandlers
             // 实例化领域模型，这里才真正的用到了领域模型
             // 注意这里是通过构造函数方法实现
             var address = new Address(message.Province, message.City, message.County, message.Street, message.Detailed);
+            var userAuths = new List<UserAuths>();
             var users = new Users(
                 Guid.NewGuid(),
                 message.Type,
@@ -103,6 +104,7 @@ namespace AGooday.DncZero.Domain.CommandHandlers
                 ip,//message.LastLoginIp,
                 DateTime.Now,//message.LastModifiedTime,
                 ip,//message.LastModifiedIp,
+                userAuths,
                 message.Sort
                 );
 
@@ -188,6 +190,7 @@ namespace AGooday.DncZero.Domain.CommandHandlers
             var address = new Address(message.Province, message.City, message.County, message.Street, message.Detailed);
             var ip = string.Empty;
             SystemHelper.GetLocalIP(ref ip);
+            var userAuths = new List<UserAuths>();
             var users = new Users(
                 message.Id,
                 message.Type,
@@ -222,6 +225,7 @@ namespace AGooday.DncZero.Domain.CommandHandlers
                 message.LastLoginIp,
                 DateTime.Now,//message.LastModifiedTime,
                 ip,//message.LastModifiedIp,
+                userAuths,
                 message.Sort
                 );
 

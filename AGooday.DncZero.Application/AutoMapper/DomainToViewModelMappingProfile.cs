@@ -26,6 +26,8 @@ namespace AGooday.DncZero.Application.AutoMapper
                 .ForMember(d => d.Street, o => o.MapFrom(s => s.Address.Street))
                 .ForMember(d => d.Detailed, o => o.MapFrom(s => s.Address.Detailed))
                 ;
+
+            CreateMap<Menus, MenusViewModel>();
         }
     }
 }

@@ -8,7 +8,7 @@ namespace AGooday.DncZero.Domain.Models
     /// <summary>
     /// 用户组
     /// </summary>
-    public class UserGroups : SortableEntity<Guid, long>
+    public class Groups : SortableEntity<Guid, long>
     {
         /// <summary>
         /// 用户组名

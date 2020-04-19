@@ -49,6 +49,7 @@ namespace AGooday.DncZero.Domain.Models
         /// <param name="lastloginip">上次修改时间</param>
         /// <param name="lastmodifiedtime">上次修改IP</param>
         /// <param name="modifiedip">排序</param>
+        /// <param name="userauths">用户授权</param>
         /// <param name="sort">
         public Users(
               Guid id
@@ -84,6 +85,7 @@ namespace AGooday.DncZero.Domain.Models
             , string lastloginip
             , DateTime lastmodifiedtime
             , string lastmodifiedip
+            , ICollection<UserAuths> userauths
             , long? sort
             )
         {
@@ -120,6 +122,7 @@ namespace AGooday.DncZero.Domain.Models
             LastLoginIp = lastloginip;
             LastModifiedTime = lastmodifiedtime;
             LastModifiedIp = lastmodifiedip;
+            UserAuths = userauths;
             Sort = sort;
         }
         /// <summary>

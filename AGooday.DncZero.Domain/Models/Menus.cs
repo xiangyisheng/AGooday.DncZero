@@ -19,6 +19,18 @@ namespace AGooday.DncZero.Domain.Models
         /// </summary>
         public Guid? ParentId { get; private set; }
         /// <summary>
+        /// 区域
+        /// </summary>
+        public Guid Area { get; private set; }
+        /// <summary>
+        /// 控制器
+        /// </summary>
+        public Guid Controller { get; private set; }
+        /// <summary>
+        /// 动作
+        /// </summary>
+        public Guid Action { get; private set; }
+        /// <summary>
         /// Url地址
         /// </summary>
         public string Url { get; private set; }
@@ -74,5 +86,10 @@ namespace AGooday.DncZero.Domain.Models
         /// 关闭前执行方法
         /// </summary>
         public string BeforeCloseFun { get; private set; }
+
+        /// <summary>
+        /// 用户授权详情
+        /// </summary>
+        public virtual ICollection<Functions> Functions { get; private set; }
     }
 }

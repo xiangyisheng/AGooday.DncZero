@@ -1,4 +1,5 @@
-﻿using AGooday.DncZero.Common.Helper;
+﻿using AGooday.DncZero.Common.Enumerator;
+using AGooday.DncZero.Common.Helper;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,11 +11,59 @@ namespace AGooday.DncZero.Common.DB
     {
         private static string defaultConnection = Appsettings.app(new string[] { "ConnectionStrings", "DefaultConnection" });
         private static string defaultConnectionFile = Appsettings.app(new string[] { "ConnectionStrings", "DefaultConnectionFile" });
+
+        private static string sqliteConnection = Appsettings.app(new string[] { "AppSettings", "Sqlite", "SqliteConnection" });
+        private static bool isSqliteEnabled = (Appsettings.app(new string[] { "AppSettings", "Sqlite", "Enabled" })).ObjToBool();
+
+        private static string sqlServerConnection = Appsettings.app(new string[] { "AppSettings", "SqlServer", "SqlServerConnection" });
+        private static string sqlServerConnectionFile = Appsettings.app(new string[] { "AppSettings", "SqlServer", "SqlServerConnectionFile" });
+        private static bool isSqlServerEnabled = (Appsettings.app(new string[] { "AppSettings", "SqlServer", "Enabled" })).ObjToBool();
+
+        private static string mySqlConnection = Appsettings.app(new string[] { "AppSettings", "MySql", "MySqlConnection" });
+        private static string mySqlConnectionFile = Appsettings.app(new string[] { "AppSettings", "MySql", "MySqlConnectionFile" });
+        private static bool isMySqlEnabled = (Appsettings.app(new string[] { "AppSettings", "MySql", "Enabled" })).ObjToBool();
+
+        private static string oracleConnection = Appsettings.app(new string[] { "AppSettings", "Oracle", "OracleConnection" });
+        private static string oracleConnectionFile = Appsettings.app(new string[] { "AppSettings", "Oracle", "OracleConnectionFile" });
+        private static bool IsOracleEnabled = (Appsettings.app(new string[] { "AppSettings", "Oracle", "Enabled" })).ObjToBool();
+
+        public static DataBaseType DbType = DataBaseType.SqlServer;
+
         public static string ConnectionString => InitConn();
 
         public static string GetConnectionString(params string[] conn) => DifDBConnOfSecurity(conn);
 
-        private static string InitConn() => DifDBConnOfSecurity(defaultConnectionFile, defaultConnection);
+        private static string InitConn()
+        {
+
+            if (isSqliteEnabled)
+            {
+                DbType = DataBaseType.Sqlite;
+                return sqliteConnection;
+            }
+            else if (isSqlServerEnabled)
+            {
+                DbType = DataBaseType.SqlServer;
+                return DifDBConnOfSecurity(@$"{sqlServerConnectionFile}", sqlServerConnection);
+            }
+            else if (isMySqlEnabled)
+            {
+                DbType = DataBaseType.MySql;
+                return DifDBConnOfSecurity(@$"{mySqlConnectionFile}", mySqlConnection);
+            }
+            else if (IsOracleEnabled)
+            {
+                DbType = DataBaseType.Oracle;
+                return DifDBConnOfSecurity(@$"{oracleConnectionFile}", oracleConnection);
+            }
+            else
+            {
+                DbType = DataBaseType.SqlServer;
+                var defaultConnectionString = DifDBConnOfSecurity(defaultConnectionFile, defaultConnection);
+
+                return string.IsNullOrWhiteSpace(defaultConnectionString) ? "server=.;uid=sa;pwd=mssql*;database=DncZero" : defaultConnectionString;
+            }
+        }
         private static string DifDBConnOfSecurity(params string[] conn)
         {
             try
