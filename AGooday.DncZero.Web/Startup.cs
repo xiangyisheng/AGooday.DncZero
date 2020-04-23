@@ -16,10 +16,6 @@ using AGooday.DncZero.Web.Extensions;
 using AGooday.DncZero.Common.Helper;
 using AGooday.DncZero.Infrastructure.Identity.Data;
 using AGooday.DncZero.Common.DB;
-using AGooday.DncZero.Infrastructure.Identity.Models;
-using AGooday.DncZero.Infrastructure.Identity.Authorization;
-using AGooday.DncZero.Infrastructure.Context;
-using AGooday.DncZero.Common.Enumerator;
 using AGooday.DncZero.Web.Filters;
 
 namespace AGooday.DncZero.Web
@@ -27,17 +23,21 @@ namespace AGooday.DncZero.Web
     public class Startup
     {
         /*
-         一、迁移项目1（一定要切换到 AGooday.DncZero.Infrastructure 项目下，使用 Package Manager Console）：
-           1、add-migration InitDncZeroDb -Context DncZeroDbContext 
-           2、add-migration InitEventStoreDb -Context EventStoreSQLContext -o Migrations/EventStore
-           3、update-database -Context DncZeroDbContext
-           4、update-database -Context EventStoreSQLContext
-
-         二、迁移项目2（一定要切换到 AGooday.DncZero.Infrastructure.Identity 项目下，使用 Package Manager Console）：
-           1、add-migration InitIdentityDb -Context ApplicationDbContext -o Data/Migrations/ 
-           2、update-database -Context ApplicationDbContext
-             
-        */
+         * 注意：执行命令前，AGooday.DncZero.Infrastructure.Identity 需要通过 Nuget 安装：
+         *     1.Microsoft.EntityFrameworkCore.Tools
+         *     2.Microsoft.EntityFrameworkCore.Design
+         * 
+         * 一、迁移项目1（一定要切换到 AGooday.DncZero.Infrastructure 项目下，使用 Package Manager Console）：
+         *   1、add-migration InitDncZeroDb -Context DncZeroDbContext 
+         *   2、add-migration InitEventStoreDb -Context EventStoreSQLContext -o Migrations/EventStore
+         *   3、update-database -Context DncZeroDbContext
+         *   4、update-database -Context EventStoreSQLContext
+         * 
+         * 二、迁移项目2（一定要切换到 AGooday.DncZero.Infrastructure.Identity 项目下，使用 Package Manager Console）：
+         *   1、add-migration InitIdentityDb -Context ApplicationDbContext -o Data/Migrations/ 
+         *   2、update-database -Context ApplicationDbContext
+         * 
+         */
         public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
@@ -63,34 +63,6 @@ namespace AGooday.DncZero.Web
                //options.UseSqlServer(BaseDBConfig.GetConnectionString(Configuration.GetConnectionString("DefaultConnectionFile"), Configuration.GetConnectionString("DefaultConnection")))
                options.UseSqlServer(BaseDBConfig.ConnectionString)
             );
-
-            switch (BaseDBConfig.DbType)
-            {
-                case DataBaseType.MySql:
-                    services.AddDbContext<DncZeroDbContext>(options =>
-                        options.UseMySql(BaseDBConfig.ConnectionString)
-                    );
-                    break;
-                case DataBaseType.SqlServer:
-                    services.AddDbContext<DncZeroDbContext>(options =>
-                        options.UseSqlServer(BaseDBConfig.ConnectionString)
-                    );
-                    break;
-                case DataBaseType.Sqlite:
-                    services.AddDbContext<DncZeroDbContext>(options =>
-                        options.UseSqlite(BaseDBConfig.ConnectionString)
-                    );
-                    break;
-                case DataBaseType.Oracle:
-                    break;
-                case DataBaseType.PostgreSQL:
-                    break;
-                default:
-                    services.AddDbContext<DncZeroDbContext>(options =>
-                        options.UseSqlServer(BaseDBConfig.ConnectionString)
-                    );
-                    break;
-            }
 
             //services.AddIdentity<ApplicationUser, IdentityRole>()
             //    .AddEntityFrameworkStores<ApplicationDbContext>()

@@ -82,7 +82,7 @@ namespace AGooday.DncZero.Web.Extensions
             // 注入 基础设施层 - 数据层
             services.AddScoped<IRepository, Repository>();
             services.AddScoped<IUsersRepository, UsersRepository>();
-            //services.AddScoped<DncZeroDbContext>();
+            services.AddScoped<DncZeroDbContext>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             // 注入 基础设施层 - 事件溯源

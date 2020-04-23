@@ -1,4 +1,5 @@
 ﻿using AGooday.DncZero.Common.DB;
+using AGooday.DncZero.Common.Enumerator;
 using AGooday.DncZero.Domain.Models;
 using AGooday.DncZero.Infrastructure.Mappings;
 using Microsoft.EntityFrameworkCore;
@@ -24,7 +25,7 @@ namespace AGooday.DncZero.Infrastructure.Context
         /// <summary>
         /// 用户组
         /// </summary>
-        public DbSet<Groups> UserGroups { get; set; }
+        public DbSet<Groups> Groups { get; set; }
         /// <summary>
         /// 用户用户组关联
         /// </summary>
@@ -70,12 +71,14 @@ namespace AGooday.DncZero.Infrastructure.Context
         /// </summary>
         public DbSet<DataLogs> DataLogs { get; set; }
         #endregion
-
+        #region DbQuery
+        public DbQuery<UserPermissions> UserPermissions { get; set; }
+        #endregion
         //执行
-        public DncZeroDbContext(DbContextOptions<DncZeroDbContext> options)
-            : base(options)
-        {
-        }
+        //public DncZeroDbContext(DbContextOptions<DncZeroDbContext> options)
+        //    : base(options)
+        //{
+        //}
         /// <summary>
         /// 重写自定义Map配置
         /// </summary>
@@ -85,6 +88,18 @@ namespace AGooday.DncZero.Infrastructure.Context
             //对 UsersMap 进行配置
             modelBuilder.ApplyConfiguration(new UsersMap());
             modelBuilder.ApplyConfiguration(new UserAuthsMap());
+            //modelBuilder.ApplyConfiguration(new GroupsMap());
+            //modelBuilder.ApplyConfiguration(new UserGroupRelationMap());
+            //modelBuilder.ApplyConfiguration(new UserRoleRelationMap());
+            //modelBuilder.ApplyConfiguration(new UserPermissionRelationMap());
+            //modelBuilder.ApplyConfiguration(new RolesMap());
+            //modelBuilder.ApplyConfiguration(new RolePermissionRelationMap());
+            //modelBuilder.ApplyConfiguration(new GroupRoleRelationMap());
+            //modelBuilder.ApplyConfiguration(new PermissionsMap());
+            //modelBuilder.ApplyConfiguration(new OperateLogsMap());
+            //modelBuilder.ApplyConfiguration(new MenusMap());
+            //modelBuilder.ApplyConfiguration(new FunctionsMap());
+            //modelBuilder.ApplyConfiguration(new DataLogsMap());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -112,12 +127,34 @@ namespace AGooday.DncZero.Infrastructure.Context
             #endregion
 
             #region
-            //optionsBuilder
-            //    // 安装NuGet包 Microsoft.EntityFrameworkCore.SqlServer
-            //    .UseSqlServer(BaseDBConfig.ConnectionString);
+            switch (BaseDBConfig.DbType)
+            {
+                case DataBaseType.MySql:
+                    optionsBuilder.
+                        // 安装NuGet包 Pomelo.EntityFrameworkCore.MySql
+                        UseMySql(BaseDBConfig.ConnectionString);
+                    break;
+                case DataBaseType.SqlServer:
+                    optionsBuilder
+                        // 安装NuGet包 Microsoft.EntityFrameworkCore.SqlServer
+                        .UseSqlServer(BaseDBConfig.ConnectionString);
+                    break;
+                case DataBaseType.Sqlite:
+                    optionsBuilder.
+                        // 安装NuGet包 Microsoft.EntityFrameworkCore.Sqlite
+                        UseSqlite(BaseDBConfig.ConnectionString);
+                    break;
+                case DataBaseType.Oracle:
+                    break;
+                case DataBaseType.PostgreSQL:
+                    break;
+                default:
+                    optionsBuilder.UseSqlServer(BaseDBConfig.ConnectionString);
+                    break;
+            }
             #endregion
 
-            base.OnConfiguring(optionsBuilder);
+            //base.OnConfiguring(optionsBuilder);
         }
     }
 }

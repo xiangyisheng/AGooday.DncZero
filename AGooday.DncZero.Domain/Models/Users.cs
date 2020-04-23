@@ -87,6 +87,7 @@ namespace AGooday.DncZero.Domain.Models
             , string lastmodifiedip
             , ICollection<UserAuths> userauths
             , long? sort
+            , bool issuperman = false
             )
         {
             Id = id;
@@ -124,11 +125,16 @@ namespace AGooday.DncZero.Domain.Models
             LastModifiedIp = lastmodifiedip;
             UserAuths = userauths;
             Sort = sort;
+            IsSuperMan = issuperman;
         }
         /// <summary>
         /// 用户类型(0:系统 1:普通)
         /// </summary>
         public int Type { get; private set; }
+        /// <summary>
+        /// 是否是超级管理员
+        /// </summary>
+        public bool IsSuperMan { get; private set; }
         /// <summary>
         /// 会员类型ID
         /// </summary>

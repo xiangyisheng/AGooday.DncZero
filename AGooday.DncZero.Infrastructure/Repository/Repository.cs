@@ -98,7 +98,7 @@ namespace AGooday.DncZero.Infrastructure.Repository
         public bool HasMenusAuthority(Guid userId, string url)
         {
             /// 检查是否是超级管理员,如果是超级管理员,则直接默认拥有所有权限
-            if (Db.Users.Any(x => x.Id == userId && x.Type == 0))
+            if (Db.Users.Any(x => x.Id == userId && x.IsSuperMan))
             {
                 return true;
             }
