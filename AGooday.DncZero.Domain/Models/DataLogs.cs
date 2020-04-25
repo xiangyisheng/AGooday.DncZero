@@ -8,7 +8,7 @@ namespace AGooday.DncZero.Domain.Models
     /// <summary>
     /// 数据日志
     /// </summary>
-    public class DataLogs : Entity<int>
+    public class DataLogs : Entity<Guid>
     {
         /// <summary>
         /// 名称

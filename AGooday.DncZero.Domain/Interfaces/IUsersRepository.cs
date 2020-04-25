@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AGooday.DncZero.Domain.Interfaces
 {
@@ -19,6 +20,7 @@ namespace AGooday.DncZero.Domain.Interfaces
         Users GetByName(string name);
         Users GetByEmail(string email);
 
+        Task<Users> LoginAsync(string identifier, string credential);
         /// <summary>
         /// 是否拥有此权限
         /// </summary>

@@ -70,6 +70,10 @@ namespace AGooday.DncZero.Infrastructure.Context
         /// 数据日志
         /// </summary>
         public DbSet<DataLogs> DataLogs { get; set; }
+        /// <summary>
+        /// 登录日志
+        /// </summary>
+        public DbSet<LoginLogs> LoginLogs { get; set; }
         #endregion
         #region DbQuery
         public DbQuery<UserPermissions> UserPermissions { get; set; }

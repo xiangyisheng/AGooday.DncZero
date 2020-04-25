@@ -80,7 +80,7 @@ namespace AGooday.DncZero.Web.Filters
         /// <returns></returns>
         public static string GetLoginUserId(this IIdentity identity)
         {
-            var claim = (identity as ClaimsIdentity)?.FindFirst("LoginUserId");
+            var claim = (identity as ClaimsIdentity)?.FindFirst("UserId");
             if (claim != null)
             {
                 return claim.Value;

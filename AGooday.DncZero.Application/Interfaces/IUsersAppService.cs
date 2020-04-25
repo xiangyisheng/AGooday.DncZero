@@ -3,6 +3,7 @@ using AGooday.DncZero.Application.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AGooday.DncZero.Application.Interfaces
 {
@@ -20,6 +21,12 @@ namespace AGooday.DncZero.Application.Interfaces
         void Remove(Guid id);
         IList<UsersHistoryData> GetAllHistory(Guid id);
 
+        /// <summary>
+        /// 登陆
+        /// </summary>
+        /// <param name="dto">登录信息</param>
+        /// <returns></returns>
+        Task<LoginResultViewModel> LoginAsync(LoginViewModel LoginViewModel);
         /// <summary>
         /// 是否拥有此权限
         /// </summary>

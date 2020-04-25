@@ -6,14 +6,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using AGooday.DncZero.Web.Models;
 using AGooday.DncZero.Application.Interfaces;
 using FluentValidation;
 using AGooday.DncZero.Application.ViewModels;
 using Microsoft.Extensions.Caching.Memory;
 using AGooday.DncZero.Domain.Core.Notifications;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 
 namespace AGooday.DncZero.Web.Controllers
 {
@@ -194,12 +192,6 @@ namespace AGooday.DncZero.Web.Controllers
         {
             var usersHistoryData = _usersAppService.GetAllHistory(id);
             return Json(usersHistoryData);
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

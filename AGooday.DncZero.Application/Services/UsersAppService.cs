@@ -1,6 +1,8 @@
 ﻿using AGooday.DncZero.Application.EventSourcedNormalizers.Users;
 using AGooday.DncZero.Application.Interfaces;
 using AGooday.DncZero.Application.ViewModels;
+using AGooday.DncZero.Common.Enumerator;
+using AGooday.DncZero.Common.Extensions;
 using AGooday.DncZero.Domain.Commands.Users;
 using AGooday.DncZero.Domain.Core.Bus;
 using AGooday.DncZero.Domain.Interfaces;
@@ -11,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AGooday.DncZero.Application.Services
 {
@@ -98,6 +101,38 @@ namespace AGooday.DncZero.Application.Services
             return UsersHistory.ToJavaScriptStudentHistory(_eventStoreRepository.All(id));
         }
 
+        /// <summary>
+        /// 登陆
+        /// </summary>
+        /// <param name="dto">登录信息</param>
+        /// <returns></returns>
+        public async Task<LoginResultViewModel> LoginAsync(LoginViewModel LoginViewModel)
+        {
+            var result = new LoginResultViewModel();
+            var entity = await _usersRepository.LoginAsync(LoginViewModel.Identifier, LoginViewModel.Credential.ToMd5());
+            result.Identifier = LoginViewModel.Identifier;
+            result.User = _mapper.Map<UsersViewModel>(entity);
+            if (entity == null)
+            {
+                result.LoginSuccess = false;
+                result.Message = "Account or password wrong ";
+                result.Result = LoginResult.AccountOrPasswordWrong;
+            }
+            else
+            {
+                result.LoginSuccess = true;
+            }
+            var loginLog = new LoginLogs
+            {
+                UserId = entity?.Id,
+                LoginName = entity.Name,
+                IP = LoginViewModel.IP,
+                LoginTime = DateTime.Now,
+                Message = result.Message
+            };
+            //增加日志
+            return result;
+        }
         /// <summary>
         /// 是否拥有此权限
         /// </summary>

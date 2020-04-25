@@ -68,22 +68,20 @@ namespace AGooday.DncZero.Web
             //    .AddEntityFrameworkStores<ApplicationDbContext>()
             //    .AddDefaultTokenProviders();
 
-            //services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            //    .AddCookie(o =>
-            //    {
-            //        o.LoginPath = new PathString("/login");
-            //        o.AccessDeniedPath = new PathString("/home/access-denied");
-            //    });
-            //    //.AddFacebook(o =>
-            //    //{
-            //    //    o.AppId = Configuration["Authentication:Facebook:AppId"];
-            //    //    o.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
-            //    //})
-            //    //.AddGoogle(googleOptions =>
-            //    //{
-            //    //    googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
-            //    //    googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
-            //    //});
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(o =>
+                {
+                    o.ExpireTimeSpan = TimeSpan.FromMinutes(480);//cookie默认有效时间为8个小时
+                    o.LoginPath = new PathString("/Users/Login");
+                    o.LogoutPath = new PathString("/Users/Logout");
+                    o.Cookie = new CookieBuilder
+                    {
+                        HttpOnly = true,
+                        Name = "AGooday.DncZero.Identity",
+                        Path = "/"
+                    };
+                    //o.DataProtectionProvider = null;//如果需要做负载均衡，就需要提供一个Key
+                });
 
             // Automapper 注入
             services.AddAutoMapperSetup();
@@ -134,7 +132,9 @@ namespace AGooday.DncZero.Web
 
             app.UseRouting();
 
-            //app.UseAuthorization();
+            //全局身份认证
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

@@ -1,4 +1,5 @@
-﻿using AGooday.DncZero.Domain.Interfaces;
+﻿using AGooday.DncZero.Common.Enumerator;
+using AGooday.DncZero.Domain.Interfaces;
 using AGooday.DncZero.Domain.Models;
 using AGooday.DncZero.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
@@ -6,10 +7,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AGooday.DncZero.Infrastructure.Repository
 {
-    public class UsersRepository : Repository<Users,Guid>, IUsersRepository
+    public class UsersRepository : Repository<Users, Guid>, IUsersRepository
     {
         public UsersRepository(DncZeroDbContext context)
             : base(context)
@@ -42,6 +44,16 @@ namespace AGooday.DncZero.Infrastructure.Repository
             var roleIds = Db.UserRoleRelation.Where(x => x.UserId == userId)
                 .Select(x => x.RoleId).ToList();
             return GetAllMenus(userId).Any(x => url.StartsWith(x.Url));
+        }
+
+        public async Task<Users> LoginAsync(string identifier, string credential)
+        {
+            var logDbSet = Db.LoginLogs;
+            var entity = await DbSet
+                .Join(Db.UserAuths, a => a.Id, b => b.UserId, (a, b) => new { a, b }).Where(w => w.b.Identifier == identifier && w.b.Credential == credential)
+                .FirstOrDefaultAsync();
+            var reslt = entity.a;
+            return reslt;
         }
 
         /// <summary>
