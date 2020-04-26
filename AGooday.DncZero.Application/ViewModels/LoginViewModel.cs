@@ -12,6 +12,7 @@ namespace AGooday.DncZero.Application.ViewModels
         /// </summary>
         [Display(Name = "登录账号"), Required, MinLength(4), MaxLength(20)]
         //[RegularExpression("^[^_][a-zA-Z0-9_]*$", ErrorMessage = "登录账号必须是字母、数字或者下划线的组合")]
+        [RegularExpression(@"^([\w-\.]+)@([\w-\.]+)(\.[a-zA-Z0-9]+)|(((\+)?86|((\+)?86)?)0?1[3458]\d{9})|([a-zA-Z0-9_]{4,16})$", ErrorMessage = "登录账号必须是字母、数字或者下划线的组合或有效手机号码或有效邮箱地址")]
         public string Identifier { get; set; }
 
         /// <summary>

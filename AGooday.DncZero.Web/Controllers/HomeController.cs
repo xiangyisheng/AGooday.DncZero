@@ -13,7 +13,6 @@ namespace AGooday.DncZero.Web.Controllers
     [IgnoreAuth]
     public class HomeController : BaseController
     {
-        [IgnoreAuth]
         public IActionResult Index()
         {
             return View();

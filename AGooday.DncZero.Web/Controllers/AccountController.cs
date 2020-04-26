@@ -16,7 +16,7 @@ using AGooday.DncZero.Web.Filters;
 
 namespace AGooday.DncZero.Web.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private readonly ILogger<UsersController> _logger;
         private readonly IUsersAppService _usersAppService;
