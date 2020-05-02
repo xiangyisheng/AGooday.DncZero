@@ -1,4 +1,5 @@
-﻿using AGooday.DncZero.Domain.Core.Models;
+﻿using AGooday.DncZero.Common.Enumerator;
+using AGooday.DncZero.Domain.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,8 +11,12 @@ namespace AGooday.DncZero.Domain.Models
     /// </summary>
     public class Users : SortableEntity<Guid, long>
     {
-        protected Users()
+        //protected Users()
+        //{
+        //}
+        public Users()
         {
+            this.Id = Guid.NewGuid();
         }
         /// <summary>
         /// 用户信息
@@ -130,139 +135,141 @@ namespace AGooday.DncZero.Domain.Models
         /// <summary>
         /// 用户类型(0:系统 1:普通)
         /// </summary>
-        public int Type { get; private set; }
+        public int Type { get; set; }
         /// <summary>
         /// 是否是超级管理员
         /// </summary>
-        public bool IsSuperMan { get; private set; }
+        public bool IsSuperMan { get; set; }
         /// <summary>
         /// 会员类型ID
         /// </summary>
-        public Guid? MtypeId { get; private set; }
+        public Guid? MtypeId { get; set; }
         /// <summary>
         /// 昵称
         /// </summary>
-        public string NickName { get; private set; }
+        public string NickName { get; set; }
         /// <summary>
         /// 姓氏
         /// </summary>
-        public string Surname { get; private set; }
+        public string Surname { get; set; }
         /// <summary>
         /// 姓名
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; set; }
         /// <summary>
         /// 真实姓名
         /// </summary>
-        public string RealName { get; private set; }
+        public string RealName { get; set; }
         /// <summary>
         /// 手机
         /// </summary>
-        public string Phone { get; private set; }
+        public string Phone { get; set; }
         /// <summary>
         /// 邮箱
         /// </summary>
-        public string Email { get; private set; }
+        public string Email { get; set; }
         /// <summary>
         /// 出生日期
         /// </summary>
-        public DateTime? BirthDate { get; private set; }
+        public DateTime? BirthDate { get; set; }
         /// <summary>
         /// 性别(0:女性 1:男性 2:其他/0: female 1: male 1: other)
         /// </summary>
-        public int? Sex { get; private set; }
+        public int? Sex { get; set; }
         /// <summary>
         /// 年龄
         /// </summary>
-        public int? Age { get; private set; }
+        public int? Age { get; set; }
         /// <summary>
         /// 个人全球统一标识(全称是Globally Recognized Avatar)
         /// </summary>
-        public string Gravatar { get; private set; }
+        public string Gravatar { get; set; }
         /// <summary>
         /// 头像
         /// </summary>
-        public string Avatar { get; private set; }
+        public string Avatar { get; set; }
         /// <summary>
         /// 座右铭/[signature]
         /// </summary>
-        public string Motto { get; private set; }
+        public string Motto { get; set; }
         /// <summary>
         /// 自我介绍/个人简历(biography的缩写)
         /// </summary>
-        public string Bio { get; private set; }
+        public string Bio { get; set; }
         /// <summary>
         /// 身份证号
         /// </summary>
-        public string Idcard { get; private set; }
+        public string Idcard { get; set; }
         /// <summary>
         /// 专业
         /// </summary>
-        public string Major { get; private set; }
+        public string Major { get; set; }
         /// <summary>
         /// 政体(团员/党员)
         /// </summary>
-        public string Polity { get; private set; }
+        public string Polity { get; set; }
         /// <summary>
         /// 当前登录状态 0:离线 1:在线 2:隐身 3:离开
         /// </summary>
-        public int? NowState { get; private set; }
+        public int? NowState { get; set; }
         /// <summary>
         /// 用户状态 0:未激活 1:激活 2:冻结 3:解冻
         /// </summary>
-        public int? State { get; private set; }
+        public int? State { get; set; }
         /// <summary>
         /// 户籍
         /// </summary>
-        public Address Address { get; private set; }
+        public Address Address { get; set; }
         /// <summary>
         /// 公司
         /// </summary>
-        public string Company { get; private set; }
+        public string Company { get; set; }
         /// <summary>
         /// 网站
         /// </summary>
-        public string Website { get; private set; }
+        public string Website { get; set; }
         /// <summary>
         /// 微博
         /// </summary>
-        public string Weibo { get; private set; }
+        public string Weibo { get; set; }
         /// <summary>
         /// 博客
         /// </summary>
-        public string Blog { get; private set; }
+        public string Blog { get; set; }
         /// <summary>
         /// 个性地址
         /// </summary>
-        public string Url { get; private set; }
+        public string Url { get; set; }
         /// <summary>
         /// 注册时间/加入时间
         /// </summary>
-        public DateTime RegisterTime { get; private set; }
+        public DateTime RegisterTime { get; set; }
         /// <summary>
         /// 注册IP
         /// </summary>
-        public string RegisterIp { get; private set; }
+        public string RegisterIp { get; set; }
         /// <summary>
         /// 最近登录时间
         /// </summary>
-        public DateTime LastLoginTime { get; private set; }
+        public DateTime LastLoginTime { get; set; }
         /// <summary>
         /// 最近登录IP
         /// </summary>
-        public string LastLoginIp { get; private set; }
+        public string LastLoginIp { get; set; }
         /// <summary>
         /// 上次修改时间
         /// </summary>
-        public DateTime LastModifiedTime { get; private set; }
+        public DateTime LastModifiedTime { get; set; }
         /// <summary>
         /// 上次修改IP
         /// </summary>
-        public string LastModifiedIp { get; private set; }
+        public string LastModifiedIp { get; set; }
 
         /// <summary>
         /// 用户授权详情
         /// </summary>
-        public virtual ICollection<UserAuths> UserAuths { get; private set; }
+        public virtual ICollection<UserAuths> UserAuths { get; set; }
+
+        public ICollection<UserGroupRelation> UserGroupRelation { get; set; }
     }
 }

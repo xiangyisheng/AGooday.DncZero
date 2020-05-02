@@ -12,6 +12,7 @@ using AGooday.DncZero.Application.ViewModels;
 using Microsoft.Extensions.Caching.Memory;
 using AGooday.DncZero.Domain.Core.Notifications;
 using MediatR;
+using AGooday.DncZero.Domain.Models;
 
 namespace AGooday.DncZero.Web.Controllers
 {
@@ -33,21 +34,23 @@ namespace AGooday.DncZero.Web.Controllers
             _notifications = (DomainNotificationHandler)notifications;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var users = _usersAppService.GetAll().OrderBy(o => o.Name);
+            //var users = _usersAppService.GetAll().OrderBy(o => o.Name);
+            var users = await _usersAppService.ListAsync();
             return View(users);
         }
 
         // GET: Users/Details/5
-        public ActionResult Details(Guid? id)
+        public async Task<ActionResult> Details(Guid? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var usersViewModel = _usersAppService.GetById(id.Value);
+            //var usersViewModel = _usersAppService.GetById(id.Value);
+            var usersViewModel = await _usersAppService.FindByIdAsync(id.Value);
 
             if (usersViewModel == null)
             {
@@ -100,7 +103,7 @@ namespace AGooday.DncZero.Web.Controllers
                 #endregion
 
                 // 执行添加方法
-                _usersAppService.Register(usersViewModel);
+                _usersAppService.Create(usersViewModel);
 
                 //var errorData = _cache.Get("ErrorData");
                 //if (errorData == null)
@@ -115,6 +118,12 @@ namespace AGooday.DncZero.Web.Controllers
             {
                 return View(e.Message);
             }
+        }
+        [HttpPost]
+        public async Task<IActionResult> UpdateAsync([FromBody] UsersViewModel usersViewModel)
+        {
+            var response = await _usersAppService.ModifyAsync(usersViewModel); ;
+            return ProduceResponse<Users>(response);
         }
 
         // GET: Users/Edit/5

@@ -3,12 +3,17 @@ using AGooday.DncZero.Application.Interfaces;
 using AGooday.DncZero.Application.Services;
 using AGooday.DncZero.Domain.CommandHandlers;
 using AGooday.DncZero.Domain.Commands.Users;
+using AGooday.DncZero.Domain.Communication;
 using AGooday.DncZero.Domain.Core.Bus;
 using AGooday.DncZero.Domain.Core.Events;
 using AGooday.DncZero.Domain.Core.Notifications;
 using AGooday.DncZero.Domain.EventHandlers;
 using AGooday.DncZero.Domain.Events.Users;
 using AGooday.DncZero.Domain.Interfaces;
+using AGooday.DncZero.Domain.Models;
+using AGooday.DncZero.Domain.Queries;
+using AGooday.DncZero.Domain.Queries.Users;
+using AGooday.DncZero.Domain.QueryHandler;
 using AGooday.DncZero.Infrastructure.Bus;
 using AGooday.DncZero.Infrastructure.Context;
 using AGooday.DncZero.Infrastructure.Identity.Authorization;
@@ -68,9 +73,14 @@ namespace AGooday.DncZero.Web.Extensions
 
             // 领域层 - 领域命令
             // 将命令模型和命令处理程序匹配
-            services.AddScoped<IRequestHandler<RegisterUsersCommand, Unit>, UsersCommandHandler>();
+            services.AddScoped<IRequestHandler<CreateUsersCommand, Unit>, UsersCommandHandler>();
+            services.AddScoped<IRequestHandler<RegisterUsersCommand, Response<Users>>, UsersCommandHandler>();
             services.AddScoped<IRequestHandler<UpdateUsersCommand, Unit>, UsersCommandHandler>();
+            services.AddScoped<IRequestHandler<ModifyUsersCommand, Response<Users>>, UsersCommandHandler>();
             services.AddScoped<IRequestHandler<RemoveUsersCommand, Unit>, UsersCommandHandler>();
+
+            services.AddScoped<IRequestHandler<GetByIdQuery<Users>, Users>, UsersQueryHandler>();
+            services.AddScoped<IRequestHandler<ListUsersQuery, IEnumerable<Users>>, UsersQueryHandler>();
 
             // 领域层 - Memory缓存
             services.AddSingleton<IMemoryCache>(factory =>
@@ -82,6 +92,7 @@ namespace AGooday.DncZero.Web.Extensions
             // 注入 基础设施层 - 数据层
             services.AddScoped<IRepository, Repository>();
             services.AddScoped<IUsersRepository, UsersRepository>();
+            services.AddScoped<IUserAuthsRepository, UserAuthsRepository>();
             services.AddScoped<DncZeroDbContext>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 

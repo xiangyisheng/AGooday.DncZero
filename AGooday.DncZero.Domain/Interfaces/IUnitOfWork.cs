@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AGooday.DncZero.Domain.Interfaces
 {
@@ -11,5 +12,6 @@ namespace AGooday.DncZero.Domain.Interfaces
     {
         //是否提交成功
         bool Commit();
+        Task<bool> CommitAsync();
     }
 }

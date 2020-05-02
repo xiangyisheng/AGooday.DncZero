@@ -1,0 +1,54 @@
+﻿@model RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+@section css{
+    <style type="text/css">
+        .form-signup {
+            width: 100%;
+            max-width: 420px;
+            padding: 15px;
+            margin: auto;
+        }
+
+        .form-label-group {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+    </style>
+}
+
+<vc:alerts />
+
+<form asp-action="Register" method="post" class="form-signup">
+    <div class="text-center mb-4">
+        <img class="mb-4" src="https://getbootstrap.com/docs/4.4/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal">@ViewData["Title"]</h1>
+        <p>Build form controls with floating labels via the <code>:placeholder-shown</code> pseudo-element. <a href="https://caniuse.com/#feat=css-placeholder-shown">Works in latest Chrome, Safari, and Firefox.</a></p>
+    </div>
+    <div class="form-label-group">
+        <label asp-for="NickName">Nick name</label>
+        <input asp-for="NickName" type="text" class="form-control" placeholder="full name" required="">
+        <small id="emailHelp" class="form-text text-muted">We'll never share your information with others.</small>
+        <span asp-validation-for="NickName" class="text-danger"></span>
+    </div>
+    <div class="form-label-group">
+        <label asp-for="Identifier">Email address</label>
+        <input asp-for="Identifier" type="email" class="form-control" placeholder="email@gmail.com" required="">
+        <span asp-validation-for="Identifier" class="text-danger"></span>
+    </div>
+    <div class="form-label-group">
+        <label asp-for="Credential">Password</label>
+        <input asp-for="Credential" type="password" class="form-control" placeholder="password" title="At least 6 characters with letters and numbers" required="">
+        <span asp-validation-for="Identifier" class="text-danger"></span>
+    </div>
+    <div class="form-label-group">
+        <label asp-for="VerifyPassword">Verify</label>
+        <input asp-for="VerifyPassword" type="password" class="form-control" placeholder="password (again)" required="">
+        <span asp-validation-for="VerifyPassword" class="text-danger"></span>
+    </div>
+    <button class="btn btn-lg btn-success btn-block" type="submit">Register</button>
+    <p class="mt-5 mb-3 text-muted text-center">© 2016-@DateTime.Now.Year</p>
+</form>
+

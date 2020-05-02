@@ -14,9 +14,11 @@ namespace AGooday.DncZero.Domain.Models
         /// 用户ID
         /// </summary>
         public Guid UserId { get; private set; }
+        public Users User { get; set; }
         /// <summary>
         /// 用户组ID
         /// </summary>
         public Guid GroupId { get; private set; }
+        public Groups Group { get; set; }
     }
 }

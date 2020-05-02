@@ -12,8 +12,7 @@ namespace AGooday.DncZero.Infrastructure.Migrations
                 name: "DataLogs",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Entity = table.Column<string>(nullable: true),
                     EntityName = table.Column<string>(nullable: true),
@@ -57,6 +56,22 @@ namespace AGooday.DncZero.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Groups", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LoginLogs",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: true),
+                    LoginName = table.Column<string>(nullable: true),
+                    IP = table.Column<string>(nullable: true),
+                    Message = table.Column<string>(nullable: true),
+                    LoginTime = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LoginLogs", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -202,12 +217,12 @@ namespace AGooday.DncZero.Infrastructure.Migrations
                     Type = table.Column<int>(nullable: false),
                     IsSuperMan = table.Column<bool>(nullable: false),
                     MtypeId = table.Column<Guid>(nullable: true),
-                    NickName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    NickName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true),
                     Surname = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    Name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true),
                     RealName = table.Column<string>(nullable: true),
-                    Phone = table.Column<string>(type: "varchar(11)", maxLength: 11, nullable: false),
-                    Email = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    Phone = table.Column<string>(type: "varchar(11)", maxLength: 11, nullable: true),
+                    Email = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true),
                     BirthDate = table.Column<DateTime>(nullable: true),
                     Sex = table.Column<int>(nullable: true),
                     Age = table.Column<int>(nullable: true),
@@ -219,7 +234,7 @@ namespace AGooday.DncZero.Infrastructure.Migrations
                     Major = table.Column<string>(nullable: true),
                     Polity = table.Column<string>(nullable: true),
                     NowState = table.Column<int>(nullable: true),
-                    State = table.Column<int>(nullable: true),
+                    State = table.Column<int>(nullable: true, defaultValue: 0),
                     Address_Province = table.Column<string>(nullable: true),
                     Address_City = table.Column<string>(nullable: true),
                     Address_County = table.Column<string>(nullable: true),
@@ -230,7 +245,7 @@ namespace AGooday.DncZero.Infrastructure.Migrations
                     Weibo = table.Column<string>(nullable: true),
                     Blog = table.Column<string>(nullable: true),
                     Url = table.Column<string>(nullable: true),
-                    RegisterTime = table.Column<DateTime>(nullable: false),
+                    RegisterTime = table.Column<DateTime>(nullable: false, defaultValueSql: "getdate()"),
                     RegisterIp = table.Column<string>(nullable: true),
                     LastLoginTime = table.Column<DateTime>(nullable: false),
                     LastLoginIp = table.Column<string>(nullable: true),
@@ -289,18 +304,17 @@ namespace AGooday.DncZero.Infrastructure.Migrations
                     State = table.Column<int>(nullable: false),
                     AuthTime = table.Column<DateTime>(nullable: false),
                     LastModifiedTime = table.Column<DateTime>(nullable: false),
-                    Verified = table.Column<bool>(nullable: false),
-                    UsersId = table.Column<Guid>(nullable: true)
+                    Verified = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserAuths", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserAuths_Users_UsersId",
-                        column: x => x.UsersId,
+                        name: "FK_UserAuths_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -309,9 +323,9 @@ namespace AGooday.DncZero.Infrastructure.Migrations
                 column: "MenusId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserAuths_UsersId",
+                name: "IX_UserAuths_UserId",
                 table: "UserAuths",
-                column: "UsersId");
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -327,6 +341,9 @@ namespace AGooday.DncZero.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Groups");
+
+            migrationBuilder.DropTable(
+                name: "LoginLogs");
 
             migrationBuilder.DropTable(
                 name: "OperateLogs");

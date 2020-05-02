@@ -21,6 +21,8 @@ namespace AGooday.DncZero.Domain.Core.Bus
         /// <param name="command"> 命令模型，比如RegisterStudentCommand </param>
         /// <returns></returns>
         Task SendCommand<T>(T command) where T : Command;
+        Task<object> SendCommandAsync<T>(T command);
+        Task<object> SendQuery<T>(T query);
 
 
         /// <summary>

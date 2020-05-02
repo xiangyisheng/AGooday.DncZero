@@ -7,19 +7,15 @@ namespace AGooday.DncZero.Common.Enumerator
     /// <summary>
     /// 用户类型
     /// </summary>
-    public enum UserType
+    public enum UserType : int
     {
         /// <summary>
-        /// 超级管理员
+        /// 0:系统
         /// </summary>
-        SuperAdministrator = 0,
+        System = 0,
         /// <summary>
-        /// 管理员
+        /// 1:普通
         /// </summary>
-        Admin = 1,
-        /// <summary>
-        /// 一般用户
-        /// </summary>
-        GeneralUser = 2
+        General = 1,
     }
 }

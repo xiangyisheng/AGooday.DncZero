@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AGooday.DncZero.Domain.Models
 {
-    public class SystemLogs : Entity<int>
+    public class SystemLogs : Entity<Guid>
     {
     }
 }

@@ -22,5 +22,7 @@ namespace AGooday.DncZero.Domain.Models
         /// 描述
         /// </summary>
         public string Description { get; private set; }
+
+        public ICollection<UserGroupRelation> UserGroupRelation { get; set; }
     }
 }

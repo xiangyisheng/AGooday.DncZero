@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AGooday.DncZero.Infrastructure.Migrations.EventStore
 {
     [DbContext(typeof(EventStoreSQLContext))]
-    [Migration("20200423135949_InitEventStoreDb")]
+    [Migration("20200501181450_InitEventStoreDb")]
     partial class InitEventStoreDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

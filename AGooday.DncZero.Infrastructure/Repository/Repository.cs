@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AGooday.DncZero.Infrastructure.Repository
 {
@@ -33,6 +34,10 @@ namespace AGooday.DncZero.Infrastructure.Repository
         {
             DbSet.Add(obj);
         }
+        public virtual async Task AddAsync(TEntity entity)
+        {
+            await DbSet.AddAsync(entity);
+        }
         /// <summary>
         /// 根据id获取对象
         /// </summary>
@@ -42,6 +47,10 @@ namespace AGooday.DncZero.Infrastructure.Repository
         {
             return DbSet.Find(id);
         }
+        public virtual async Task<TEntity> FindByIdAsync(TPrimaryKey id)
+        {
+            return await DbSet.FindAsync(id);
+        }
         /// <summary>
         /// 获取列表
         /// </summary>
@@ -49,6 +58,10 @@ namespace AGooday.DncZero.Infrastructure.Repository
         public virtual IQueryable<TEntity> GetAll()
         {
             return DbSet;
+        }
+        public virtual async Task<IEnumerable<TEntity>> ListAsync()
+        {
+            return await DbSet.AsNoTracking().ToListAsync();
         }
         /// <summary>
         /// 根据对象进行更新

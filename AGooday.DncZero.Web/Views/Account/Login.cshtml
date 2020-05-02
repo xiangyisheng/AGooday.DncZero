@@ -1,20 +1,33 @@
 ﻿@model LoginViewModel
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Sign in";
 }
+@section css{
+    <style type="text/css">
+        .form-signin {
+            width: 100%;
+            max-width: 420px;
+            padding: 15px;
+            margin: auto;
+        }
 
-<h1>Login</h1>
-
+        .form-label-group {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+    </style>
+}
 <form asp-action="Login" method="post" class="form-signin">
     <div class="text-center mb-4">
         <img class="mb-4" src="https://getbootstrap.com/docs/4.4/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
-        <h1 class="h3 mb-3 font-weight-normal">Floating labels</h1>
+        <h1 class="h3 mb-3 font-weight-normal">@ViewData["Title"]</h1>
         <p>Build form controls with floating labels via the <code>:placeholder-shown</code> pseudo-element. <a href="https://caniuse.com/#feat=css-placeholder-shown">Works in latest Chrome, Safari, and Firefox.</a></p>
     </div>
 
     <div class="form-label-group">
-        <label asp-for="Identifier" for="inputEmail">Email address</label>
+        <label asp-for="Identifier">Email address</label>
         <input asp-for="Identifier" type="email" class="form-control" placeholder="Email address" required="" autofocus="">
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
         <span asp-validation-for="Identifier" class="text-danger"></span>
     </div>
 
@@ -30,5 +43,5 @@
         </label>
     </div>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-    <p class="mt-5 mb-3 text-muted text-center">© 2017-2019</p>
+    <p class="mt-5 mb-3 text-muted text-center">© 2016-@DateTime.Now.Year</p>
 </form>

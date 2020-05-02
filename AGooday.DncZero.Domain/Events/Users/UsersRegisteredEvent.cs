@@ -1,4 +1,5 @@
 ﻿using AGooday.DncZero.Domain.Core.Events;
+using AGooday.DncZero.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -41,6 +42,7 @@ namespace AGooday.DncZero.Domain.Events.Users
             , string lastloginip
             , DateTime lastmodifiedtime
             , string lastmodifiedip
+            , ICollection<UserAuths> userauths
             , long? sort
             )
         {
@@ -79,6 +81,7 @@ namespace AGooday.DncZero.Domain.Events.Users
             LastLoginIp = lastloginip;
             LastModifiedTime = lastmodifiedtime;
             LastModifiedIp = lastmodifiedip;
+            UserAuths = userauths;
             Sort = sort;
         }
     }

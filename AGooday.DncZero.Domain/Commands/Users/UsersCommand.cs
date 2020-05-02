@@ -1,4 +1,6 @@
-﻿using AGooday.DncZero.Domain.Core.Commands;
+﻿using AGooday.DncZero.Common.Enumerator;
+using AGooday.DncZero.Domain.Core.Commands;
+using AGooday.DncZero.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -160,5 +162,7 @@ namespace AGooday.DncZero.Domain.Commands.Users
         /// 排序
         /// </summary>
         public long? Sort { get; set; }
+
+        public ICollection<UserAuths> UserAuths { get; set; }
     }
 }

@@ -212,5 +212,8 @@ namespace AGooday.DncZero.Application.ViewModels
         /// </summary>
         [DisplayName("排序")]
         public long? Sort { get; set; }
+        public ICollection<UserAuthsViewModel> UserAuths { get; set; }
+
+        public ICollection<UserGroupRelationViewModel> UserGroupRelation { get; set; }
     }
 }

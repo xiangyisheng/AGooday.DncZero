@@ -64,7 +64,7 @@ namespace AGooday.DncZero.Domain.Validations.Users
         // 表达式
         protected static bool HavePhone(string phone)
         {
-            return phone.Length == 11;
+            return phone?.Length == 11;
         }
     }
 }

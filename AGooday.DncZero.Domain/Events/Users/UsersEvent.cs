@@ -1,11 +1,12 @@
 ﻿using AGooday.DncZero.Domain.Core.Events;
+using AGooday.DncZero.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace AGooday.DncZero.Domain.Events.Users
 {
-    public abstract class UsersEvent: Event
+    public abstract class UsersEvent : Event
     {
         public Guid Id { get; set; }
         /// <summary>
@@ -160,5 +161,7 @@ namespace AGooday.DncZero.Domain.Events.Users
         /// 排序
         /// </summary>
         public long? Sort { get; set; }
+
+        public ICollection<UserAuths> UserAuths { get; set; }
     }
 }

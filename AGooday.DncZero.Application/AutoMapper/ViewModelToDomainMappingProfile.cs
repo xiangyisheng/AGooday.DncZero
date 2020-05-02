@@ -31,7 +31,44 @@ namespace AGooday.DncZero.Application.AutoMapper
                 ;
 
             //这里以后会写领域命令，所以不能和DomainToViewModelMappingProfile写在一起。
+            #region Users视图模型 -> 添加新Users命令模型
             //Users视图模型 -> 添加新Users命令模型
+            CreateMap<UsersViewModel, CreateUsersCommand>()
+                .ConstructUsing(c => new CreateUsersCommand(
+                    c.Type,
+                    c.MtypeId,
+                    c.NickName,
+                    c.Surname,
+                    c.Name,
+                    c.RealName,
+                    c.Phone,
+                    c.Email,
+                    c.BirthDate,
+                    c.Sex,
+                    c.Age,
+                    c.Gravatar,
+                    c.Avatar,
+                    c.Motto,
+                    c.Bio,
+                    c.Idcard,
+                    c.Major,
+                    c.Polity,
+                    c.NowState,
+                    c.State,
+                    c.Province, c.City, c.County, c.Street, c.Detailed,
+                    c.Company,
+                    c.Website,
+                    c.Weibo,
+                    c.Blog,
+                    c.Url,
+                    c.RegisterTime,
+                    c.RegisterIp,
+                    c.LastLoginTime,
+                    c.LastLoginIp,
+                    c.LastModifiedTime,
+                    c.LastModifiedIp,
+                    c.Sort
+                    ));
             CreateMap<UsersViewModel, RegisterUsersCommand>()
                 .ConstructUsing(c => new RegisterUsersCommand(
                     c.Type,
@@ -68,7 +105,9 @@ namespace AGooday.DncZero.Application.AutoMapper
                     c.LastModifiedIp,
                     c.Sort
                     ));
+            #endregion
 
+            #region Users视图模型 -> 更新Users信息命令模型
             //Users视图模型 -> 更新Users信息命令模型
             CreateMap<UsersViewModel, UpdateUsersCommand>()
                 .ConstructUsing(c => new UpdateUsersCommand(
@@ -107,8 +146,48 @@ namespace AGooday.DncZero.Application.AutoMapper
                     c.LastModifiedIp,
                     c.Sort
                     ));
+            CreateMap<UsersViewModel, ModifyUsersCommand>()
+                .ConstructUsing(c => new ModifyUsersCommand(
+                    c.Id,
+                    c.Type,
+                    c.MtypeId,
+                    c.NickName,
+                    c.Surname,
+                    c.Name,
+                    c.RealName,
+                    c.Phone,
+                    c.Email,
+                    c.BirthDate,
+                    c.Sex,
+                    c.Age,
+                    c.Gravatar,
+                    c.Avatar,
+                    c.Motto,
+                    c.Bio,
+                    c.Idcard,
+                    c.Major,
+                    c.Polity,
+                    c.NowState,
+                    c.State,
+                    c.Province, c.City, c.County, c.Street, c.Detailed,
+                    c.Company,
+                    c.Website,
+                    c.Weibo,
+                    c.Blog,
+                    c.Url,
+                    c.RegisterTime,
+                    c.RegisterIp,
+                    c.LastLoginTime,
+                    c.LastLoginIp,
+                    c.LastModifiedTime,
+                    c.LastModifiedIp,
+                    c.Sort
+                    ));
+            #endregion
 
             CreateMap<MenusViewModel, Menus>();
+
+            CreateMap<UserAuthsViewModel, UserAuths>();
         }
     }
 }

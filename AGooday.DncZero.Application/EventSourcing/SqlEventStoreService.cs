@@ -30,8 +30,15 @@ namespace AGooday.DncZero.Application.EventSourcing
         /// <param name="theEvent"></param>
         public void Save<T>(T theEvent) where T : Event
         {
-            // 对事件模型序列化
-            var serializedData = JsonConvert.SerializeObject(theEvent);
+            // 对事件模型序列化 
+            // https://stackoverflow.com/questions/7397207/json-net-error-self-referencing-loop-detected-for-type/38382021
+            // https://stackoverflow.com/questions/5769200/serialize-one-to-many-relationships-in-json-net
+            var serializedData = JsonConvert.SerializeObject(theEvent, new JsonSerializerSettings()
+            {
+                //Formatting = Formatting.Indented,
+                //PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
 
             var storedEvent = new StoredEvent(
                 theEvent,

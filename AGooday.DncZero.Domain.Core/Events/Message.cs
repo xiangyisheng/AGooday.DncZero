@@ -21,4 +21,14 @@ namespace AGooday.DncZero.Domain.Core.Events
             MessageType = GetType().Name;
         }
     }
+    public abstract class Message<T> : IRequest<T>
+    {
+        public string MessageType { get; protected set; }
+        public Guid AggregateId { get; protected set; }
+
+        protected Message()
+        {
+            MessageType = GetType().Name;
+        }
+    }
 }

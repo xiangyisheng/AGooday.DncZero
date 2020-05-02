@@ -9,6 +9,7 @@ using System.Security.Principal;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using Microsoft.Extensions.DependencyInjection;
+using AGooday.DncZero.Common.Extensions;
 
 namespace AGooday.DncZero.Web.Filters
 {
@@ -24,7 +25,8 @@ namespace AGooday.DncZero.Web.Filters
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var isIgnored = filterContext.ActionDescriptor.FilterDescriptors.Any(f => f.Filter is IgnoreAuth);
-
+            //var allowAnonymousAttribute = filterContext.ActionDescriptor.GetCustomAttributes(typeof(Microsoft.AspNetCore.Authorization.AllowAnonymousAttribute), false);
+            if (filterContext.HttpContext.User.Identity.IsAuthenticated) return;
             if (isIgnored) return;
 
             //注意：引用 Microsoft.Extensions.DependencyInjection
@@ -65,27 +67,6 @@ namespace AGooday.DncZero.Web.Filters
                 };
             }
             filterContext.Result = result;
-        }
-    }
-
-    /// <summary>
-    /// IIdentity扩展
-    /// </summary>
-    public static class IdentityExtention
-    {
-        /// <summary>
-        /// 获取登录的用户ID
-        /// </summary>
-        /// <param name="identity">IIdentity</param>
-        /// <returns></returns>
-        public static string GetLoginUserId(this IIdentity identity)
-        {
-            var claim = (identity as ClaimsIdentity)?.FindFirst("UserId");
-            if (claim != null)
-            {
-                return claim.Value;
-            }
-            return string.Empty;
         }
     }
 }

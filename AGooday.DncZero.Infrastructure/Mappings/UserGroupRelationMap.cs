@@ -18,6 +18,13 @@ namespace AGooday.DncZero.Infrastructure.Mappings
         /// <param name="builder"></param>
         public void Configure(EntityTypeBuilder<UserGroupRelation> builder)
         {
+
+            //多对多 https://www.learnentityframeworkcore.com/configuration/many-to-many-relationship-configuration
+            builder.HasKey(bc => new { bc.UserId, bc.GroupId });
+            builder.HasOne(bc => bc.User).WithMany(b => b.UserGroupRelation)
+                .HasForeignKey(bc => bc.UserId);
+            builder.HasOne(bc => bc.Group).WithMany(c => c.UserGroupRelation)
+                .HasForeignKey(bc => bc.GroupId);
         }
     }
 }

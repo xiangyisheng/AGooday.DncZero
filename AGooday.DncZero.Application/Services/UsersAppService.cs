@@ -4,9 +4,12 @@ using AGooday.DncZero.Application.ViewModels;
 using AGooday.DncZero.Common.Enumerator;
 using AGooday.DncZero.Common.Extensions;
 using AGooday.DncZero.Domain.Commands.Users;
+using AGooday.DncZero.Domain.Communication;
 using AGooday.DncZero.Domain.Core.Bus;
 using AGooday.DncZero.Domain.Interfaces;
 using AGooday.DncZero.Domain.Models;
+using AGooday.DncZero.Domain.Queries;
+using AGooday.DncZero.Domain.Queries.Users;
 using AGooday.DncZero.Infrastructure.Repository.EventSourcing;
 using AutoMapper;
 using System;
@@ -31,6 +34,7 @@ namespace AGooday.DncZero.Application.Services
         private readonly IMapper _mapper;
         // 中介者 总线
         private readonly IMediatorHandler Bus;
+        private readonly MediatR.IMediator _mediator;
         // 事件源仓储
         private readonly IEventStoreRepository _eventStoreRepository;
 
@@ -38,12 +42,14 @@ namespace AGooday.DncZero.Application.Services
             IUsersRepository usersRepository,
             IMapper mapper,
             IMediatorHandler bus,
+            MediatR.IMediator mediator,
             IEventStoreRepository eventStoreRepository
             )
         {
             _usersRepository = usersRepository;
             _mapper = mapper;
             Bus = bus;
+            _mediator = mediator;
             _eventStoreRepository = eventStoreRepository;
         }
 
@@ -60,29 +66,36 @@ namespace AGooday.DncZero.Application.Services
             //第二种写法 ProjectTo
             //return (_UsersRepository.GetAll()).ProjectTo<UsersViewModel>(_mapper.ConfigurationProvider);
         }
-
+        public async Task<IEnumerable<UsersViewModel>> ListAsync()
+        {
+            var user = await Bus.SendQuery(new ListUsersQuery());
+            return _mapper.Map<IEnumerable<UsersViewModel>>(user);
+        }
         public UsersViewModel GetById(Guid id)
         {
             return _mapper.Map<UsersViewModel>(_usersRepository.GetById(id));
         }
 
-        public void Register(UsersViewModel UsersViewModel)
+        public async Task<UsersViewModel> FindByIdAsync(Guid id)
         {
-            //这里引入领域设计中的写命令 还没有实现
-            //请注意这里如果是平时的写法，必须要引入 Users 领域模型，会造成污染
-
-            //_UsersRepository.Add(_mapper.Map<Users>(UsersViewModel));
-            //_UsersRepository.SaveChanges();
-            var sort = UsersViewModel.Sort;
-            UsersViewModel.Sort = sort == null ? 1 : sort;
-            var registerCommand = _mapper.Map<RegisterUsersCommand>(UsersViewModel);
-            Bus.SendCommand(registerCommand);
+            var query = new GetByIdQuery<Users>(id);
+            //var user = await _mediator.Send(new GetByIdQuery<Users>(id));
+            //var user = await Bus.SendQuery<GetByIdQuery<Users>>(new GetByIdQuery<Users>(id));
+            var user = await Bus.SendQuery(new GetByIdQuery<Users>(id));
+            return _mapper.Map<UsersViewModel>(user);
         }
 
         public void Update(UsersViewModel UsersViewModel)
         {
             var updateCommand = _mapper.Map<UpdateUsersCommand>(UsersViewModel);
             Bus.SendCommand(updateCommand);
+        }
+        public async Task<Response<Users>> ModifyAsync(UsersViewModel UsersViewModel)
+        {
+            var modifyCommand = _mapper.Map<ModifyUsersCommand>(UsersViewModel);
+            //var user = await _mediator.Send(modifyCommand);
+            var user = await Bus.SendCommandAsync(modifyCommand);
+            return (Response<Users>)user;
         }
 
         public void Remove(Guid id)
@@ -102,7 +115,7 @@ namespace AGooday.DncZero.Application.Services
         }
 
         /// <summary>
-        /// 登陆
+        /// 登录
         /// </summary>
         /// <param name="dto">登录信息</param>
         /// <returns></returns>
@@ -131,6 +144,85 @@ namespace AGooday.DncZero.Application.Services
                 Message = result.Message
             };
             //增加日志
+            return result;
+        }
+
+        public void Create(UsersViewModel UsersViewModel)
+        {
+            //这里引入领域设计中的写命令 还没有实现
+            //请注意这里如果是平时的写法，必须要引入 Users 领域模型，会造成污染
+
+            //_UsersRepository.Add(_mapper.Map<Users>(UsersViewModel));
+            //_UsersRepository.SaveChanges();
+            var sort = UsersViewModel.Sort;
+            UsersViewModel.Sort = sort == null ? 1 : sort;
+            var createCommand = _mapper.Map<CreateUsersCommand>(UsersViewModel);
+            Bus.SendCommand(createCommand);
+        }
+        public async Task<Response<Users>> RegisterAsync(UsersViewModel UsersViewModel)
+        {
+            var registerCommand = _mapper.Map<RegisterUsersCommand>(UsersViewModel);
+            //var user = await _mediator.Send(createCommand);
+            var user = await Bus.SendCommandAsync(registerCommand);
+            return (Response<Users>)user;
+        }
+        //public void Register(UsersViewModel UsersViewModel, RegisterViewModel RegisterViewModel)
+        //{
+        //    //这里引入领域设计中的写命令 还没有实现
+        //    //请注意这里如果是平时的写法，必须要引入 Users 领域模型，会造成污染
+
+        //    //_UsersRepository.Add(_mapper.Map<Users>(UsersViewModel));
+        //    //_UsersRepository.SaveChanges();
+        //    var sort = UsersViewModel.Sort;
+        //    UsersViewModel.Sort = sort == null ? 1 : sort;
+
+        //    var registerCommand = _mapper.Map<RegisterUsersCommand>(UsersViewModel);
+
+        //    var userauth = new UserAuths(Guid.NewGuid())
+        //    {
+        //        IdentityType = "email",
+        //        Identifier = RegisterViewModel.Identifier,
+        //        Credential = RegisterViewModel.Credential.ToMd5(),
+        //        State = 1,
+        //        AuthTime = DateTime.Now,
+        //        LastModifiedTime = DateTime.Now,
+        //        Verified = true,
+        //    };
+        //    registerCommand.UserAuths.Add(userauth);
+
+        //    Bus.SendCommand(registerCommand);
+        //}
+        /// <summary>
+        /// 注册
+        /// </summary>
+        /// <param name="RegisterViewModel">注册信息</param>
+        /// <returns></returns>
+        public async Task<UsersViewModel> RegisterAsync(RegisterViewModel RegisterViewModel)
+        {
+            var usermodel = new UsersViewModel()
+            {
+                Id = Guid.NewGuid(),
+                Sort = 0,
+                Type = 0,
+                NickName = RegisterViewModel.NickName,
+                Email = RegisterViewModel.Identifier,
+                RegisterTime = DateTime.Now,
+                RegisterIp = RegisterViewModel.IP
+            };
+            var userauth = new UserAuths(Guid.NewGuid())
+            {
+                UserId = usermodel.Id,
+                IdentityType = "email",
+                Identifier = RegisterViewModel.Identifier,
+                Credential = RegisterViewModel.Credential.ToMd5(),
+                State = 1,
+                AuthTime = DateTime.Now,
+                LastModifiedTime = DateTime.Now,
+                Verified = true,
+            };
+            var user = _mapper.Map<Users>(usermodel);
+            var entity = await _usersRepository.RegisterAsync(user, userauth);
+            var result = _mapper.Map<UsersViewModel>(entity);
             return result;
         }
         /// <summary>

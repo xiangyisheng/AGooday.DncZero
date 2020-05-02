@@ -8,7 +8,7 @@ namespace AGooday.DncZero.Domain.Models
     /// <summary>
     /// 角色权限关联
     /// </summary>
-    public class RolePermissionRelation : Entity<int>
+    public class RolePermissionRelation : Entity<Guid>
     {
         /// <summary>
         /// 角色ID

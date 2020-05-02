@@ -3,6 +3,7 @@ using AGooday.DncZero.Infrastructure.Context;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AGooday.DncZero.Infrastructure.UoW
 {
@@ -24,6 +25,11 @@ namespace AGooday.DncZero.Infrastructure.UoW
         public bool Commit()
         {
             return _dbcontext.SaveChanges() > 0;
+        }
+
+        public async Task<bool> CommitAsync()
+        {
+            return await _dbcontext.SaveChangesAsync() > 0;
         }
 
         //手动回收

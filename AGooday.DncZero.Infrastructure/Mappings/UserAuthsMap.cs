@@ -18,6 +18,9 @@ namespace AGooday.DncZero.Infrastructure.Mappings
         /// <param name="builder"></param>
         public void Configure(EntityTypeBuilder<UserAuths> builder)
         {
+            builder.HasOne(e => e.User).WithMany(c => c.UserAuths)
+                .HasForeignKey(c => c.UserId).HasConstraintName("FK_UserAuths_Users_UserId")
+                ;
         }
     }
 }

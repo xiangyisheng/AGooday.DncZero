@@ -6,7 +6,7 @@ using System.Text;
 namespace AGooday.DncZero.Domain.Commands.Users
 {
     /// <summary>
-    /// 注册一个删除 Users 命令
+    /// 注册一个更新 Users 命令
     /// 基础抽象Users命令模型
     /// </summary>
     public class UpdateUsersCommand : UsersCommand

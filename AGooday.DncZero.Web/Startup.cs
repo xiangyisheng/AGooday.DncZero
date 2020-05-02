@@ -17,6 +17,7 @@ using AGooday.DncZero.Common.Helper;
 using AGooday.DncZero.Infrastructure.Identity.Data;
 using AGooday.DncZero.Common.DB;
 using AGooday.DncZero.Web.Filters;
+using Newtonsoft.Json;
 
 namespace AGooday.DncZero.Web
 {
@@ -71,9 +72,14 @@ namespace AGooday.DncZero.Web
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(o =>
                 {
-                    o.ExpireTimeSpan = TimeSpan.FromMinutes(480);//cookie默认有效时间为8个小时
-                    o.LoginPath = new PathString("/Users/Login");
-                    o.LogoutPath = new PathString("/Users/Logout");
+                    //cookie默认有效时间为8个小时
+                    o.ExpireTimeSpan = TimeSpan.FromMinutes(480);
+                    //登录路径：这是当用户试图访问资源但未经过身份验证时，程序将会将请求重定向到这个相对路径
+                    o.LoginPath = new PathString("/Account/Login");
+                    o.LogoutPath = new PathString("/Account/Logout");
+                    //禁止访问路径：当用户试图访问资源时，但未通过该资源的任何授权策略，请求将被重定向到这个相对路径
+                    o.AccessDeniedPath = new PathString("/Home/Privacy");
+
                     o.Cookie = new CookieBuilder
                     {
                         HttpOnly = true,
@@ -90,6 +96,11 @@ namespace AGooday.DncZero.Web
             services.AddMvc(cfg =>
             {
                 cfg.Filters.Add(new AuthorityFilter());
+                //cfg.OutputFormatters.Clear();
+                //cfg.OutputFormatters.Add(new JsonOutputFormatter(new JsonSerializerSettings()
+                //{
+                //    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                //}, ArrayPool<char>.Shared));
             })
                 //.AddRazorOptions(options =>
                 //{
@@ -134,6 +145,7 @@ namespace AGooday.DncZero.Web
 
             //全局身份认证
             app.UseAuthentication();
+            //授权
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

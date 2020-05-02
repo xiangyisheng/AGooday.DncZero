@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AGooday.DncZero.Domain.Interfaces
 {
@@ -18,17 +19,21 @@ namespace AGooday.DncZero.Domain.Interfaces
         /// </summary>
         /// <param name="obj"></param>
         void Add(TEntity obj);
+        Task AddAsync(TEntity entity);
         /// <summary>
         /// 根据id获取对象
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         TEntity GetById(TPrimaryKey id);
+
+        Task<TEntity> FindByIdAsync(TPrimaryKey id);
         /// <summary>
         /// 获取列表
         /// </summary>
         /// <returns></returns>
         IQueryable<TEntity> GetAll();
+        Task<IEnumerable<TEntity>> ListAsync();
         /// <summary>
         /// 根据对象进行更新
         /// </summary>

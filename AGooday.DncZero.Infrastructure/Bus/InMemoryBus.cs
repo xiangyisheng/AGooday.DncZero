@@ -46,6 +46,15 @@ namespace AGooday.DncZero.Infrastructure.Bus
             //注意！这个仅仅是用来测试和研究源码的，请开发的时候不要使用这个
             //return Send(command);//请注意 入参 的类型
         }
+        public async Task<object> SendCommandAsync<T>(T command)
+        {
+            return await _mediator.Send(command);//请注意 入参 的类型
+        }
+
+        public async Task<object> SendQuery<T>(T query)
+        {
+            return await _mediator.Send(query);//请注意 入参 的类型
+        }
 
         /// <summary>
         /// 引发事件的实现方法

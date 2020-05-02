@@ -28,6 +28,8 @@ namespace AGooday.DncZero.Application.AutoMapper
                 ;
 
             CreateMap<Menus, MenusViewModel>();
+
+            CreateMap<UserAuths, UserAuthsViewModel>();
         }
     }
 }

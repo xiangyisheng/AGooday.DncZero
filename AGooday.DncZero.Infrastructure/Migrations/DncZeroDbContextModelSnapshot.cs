@@ -21,9 +21,8 @@ namespace AGooday.DncZero.Infrastructure.Migrations
 
             modelBuilder.Entity("AGooday.DncZero.Domain.Models.DataLogs", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("DataType");
 
@@ -130,6 +129,26 @@ namespace AGooday.DncZero.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Groups");
+                });
+
+            modelBuilder.Entity("AGooday.DncZero.Domain.Models.LoginLogs", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("IP");
+
+                    b.Property<string>("LoginName");
+
+                    b.Property<DateTime>("LoginTime");
+
+                    b.Property<string>("Message");
+
+                    b.Property<Guid?>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LoginLogs");
                 });
 
             modelBuilder.Entity("AGooday.DncZero.Domain.Models.Menus", b =>
@@ -280,13 +299,11 @@ namespace AGooday.DncZero.Infrastructure.Migrations
 
                     b.Property<Guid>("UserId");
 
-                    b.Property<Guid?>("UsersId");
-
                     b.Property<bool>("Verified");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UsersId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("UserAuths");
                 });
@@ -352,7 +369,6 @@ namespace AGooday.DncZero.Infrastructure.Migrations
                     b.Property<string>("Company");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("varchar(100)")
                         .HasMaxLength(100);
 
@@ -377,19 +393,16 @@ namespace AGooday.DncZero.Infrastructure.Migrations
                     b.Property<Guid?>("MtypeId");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("varchar(100)")
                         .HasMaxLength(100);
 
                     b.Property<string>("NickName")
-                        .IsRequired()
                         .HasColumnType("varchar(100)")
                         .HasMaxLength(100);
 
                     b.Property<int?>("NowState");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
                         .HasColumnType("varchar(11)")
                         .HasMaxLength(11);
 
@@ -399,13 +412,17 @@ namespace AGooday.DncZero.Infrastructure.Migrations
 
                     b.Property<string>("RegisterIp");
 
-                    b.Property<DateTime>("RegisterTime");
+                    b.Property<DateTime>("RegisterTime")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("getdate()");
 
                     b.Property<int?>("Sex");
 
                     b.Property<long?>("Sort");
 
-                    b.Property<int?>("State");
+                    b.Property<int?>("State")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(0);
 
                     b.Property<string>("Surname");
 
@@ -431,9 +448,10 @@ namespace AGooday.DncZero.Infrastructure.Migrations
 
             modelBuilder.Entity("AGooday.DncZero.Domain.Models.UserAuths", b =>
                 {
-                    b.HasOne("AGooday.DncZero.Domain.Models.Users")
+                    b.HasOne("AGooday.DncZero.Domain.Models.Users", "User")
                         .WithMany("UserAuths")
-                        .HasForeignKey("UsersId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("AGooday.DncZero.Domain.Models.Users", b =>

@@ -45,6 +45,24 @@ namespace AGooday.DncZero.Infrastructure.Repository
                 .Select(x => x.RoleId).ToList();
             return GetAllMenus(userId).Any(x => url.StartsWith(x.Url));
         }
+        public Users GetUserById(Guid userId)
+        {
+            var user = Db.Users.Include(x => x.UserAuths).FirstOrDefault();
+            var reslt = user;
+            return reslt;
+        }
+        public async Task<Users> GetUserByIdAsync(Guid userId)
+        {
+            var user = await Db.Users.Include(x => x.UserAuths).FirstOrDefaultAsync();
+            var reslt = user;
+            return reslt;
+        }
+        public async Task<List<Users>> GetUsers()
+        {
+            var users = await Db.Users.Include(x=>x.UserAuths).ToListAsync();
+            var reslt = users;
+            return reslt;
+        }
 
         public async Task<Users> LoginAsync(string identifier, string credential)
         {
@@ -54,6 +72,22 @@ namespace AGooday.DncZero.Infrastructure.Repository
                 .FirstOrDefaultAsync();
             var reslt = entity.a;
             return reslt;
+        }
+
+        public async Task<Users> RegisterAsync(Users user, UserAuths userauth)
+        {
+            Db.Users.Add(user);
+            Db.UserAuths.Add(userauth);
+            var reslt = await Db.SaveChangesAsync();
+            if (reslt > 0)
+            {
+                var entity = await DbSet.Where(x => x.Id == user.Id).FirstOrDefaultAsync();
+                return entity;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         /// <summary>
