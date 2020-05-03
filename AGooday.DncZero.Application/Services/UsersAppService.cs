@@ -68,7 +68,7 @@ namespace AGooday.DncZero.Application.Services
         }
         public async Task<IEnumerable<UsersViewModel>> ListAsync()
         {
-            var user = await Bus.SendQuery(new ListUsersQuery());
+            var user = await Bus.SendQuery(new UserListQuery());
             return _mapper.Map<IEnumerable<UsersViewModel>>(user);
         }
         public UsersViewModel GetById(Guid id)
@@ -85,14 +85,14 @@ namespace AGooday.DncZero.Application.Services
             return _mapper.Map<UsersViewModel>(user);
         }
 
-        public void Update(UsersViewModel UsersViewModel)
+        public void Update(UsersViewModel usersViewModel)
         {
-            var updateCommand = _mapper.Map<UpdateUsersCommand>(UsersViewModel);
+            var updateCommand = _mapper.Map<UpdateUsersCommand>(usersViewModel);
             Bus.SendCommand(updateCommand);
         }
-        public async Task<Response<Users>> ModifyAsync(UsersViewModel UsersViewModel)
+        public async Task<Response<Users>> ModifyAsync(UsersViewModel usersViewModel)
         {
-            var modifyCommand = _mapper.Map<ModifyUsersCommand>(UsersViewModel);
+            var modifyCommand = _mapper.Map<ModifyUsersCommand>(usersViewModel);
             //var user = await _mediator.Send(modifyCommand);
             var user = await Bus.SendCommandAsync(modifyCommand);
             return (Response<Users>)user;
@@ -119,11 +119,11 @@ namespace AGooday.DncZero.Application.Services
         /// </summary>
         /// <param name="dto">登录信息</param>
         /// <returns></returns>
-        public async Task<LoginResultViewModel> LoginAsync(LoginViewModel LoginViewModel)
+        public LoginResultViewModel Login(LoginViewModel loginViewModel)
         {
             var result = new LoginResultViewModel();
-            var entity = await _usersRepository.LoginAsync(LoginViewModel.Identifier, LoginViewModel.Credential.ToMd5());
-            result.Identifier = LoginViewModel.Identifier;
+            var entity = _usersRepository.Login(loginViewModel.Identifier, loginViewModel.Credential.ToMd5());
+            result.Identifier = loginViewModel.Identifier;
             result.User = _mapper.Map<UsersViewModel>(entity);
             if (entity == null)
             {
@@ -139,34 +139,32 @@ namespace AGooday.DncZero.Application.Services
             {
                 UserId = entity?.Id,
                 LoginName = entity.Name,
-                IP = LoginViewModel.IP,
+                IP = loginViewModel.IP,
                 LoginTime = DateTime.Now,
                 Message = result.Message
             };
             //增加日志
             return result;
         }
+        public async Task<Response<Users>> LoginAsync(LoginViewModel loginViewModel)
+        {
+            var user = await Bus.SendQuery(new UserLoginQuery(loginViewModel.Identifier, loginViewModel.Credential.ToMd5()));
+            return (Response<Users>)user;
+        }
 
-        public void Create(UsersViewModel UsersViewModel)
+        public void Create(UsersViewModel usersViewModel)
         {
             //这里引入领域设计中的写命令 还没有实现
             //请注意这里如果是平时的写法，必须要引入 Users 领域模型，会造成污染
 
             //_UsersRepository.Add(_mapper.Map<Users>(UsersViewModel));
             //_UsersRepository.SaveChanges();
-            var sort = UsersViewModel.Sort;
-            UsersViewModel.Sort = sort == null ? 1 : sort;
-            var createCommand = _mapper.Map<CreateUsersCommand>(UsersViewModel);
+            var sort = usersViewModel.Sort;
+            usersViewModel.Sort = sort == null ? 1 : sort;
+            var createCommand = _mapper.Map<CreateUsersCommand>(usersViewModel);
             Bus.SendCommand(createCommand);
         }
-        public async Task<Response<Users>> RegisterAsync(UsersViewModel UsersViewModel)
-        {
-            var registerCommand = _mapper.Map<RegisterUsersCommand>(UsersViewModel);
-            //var user = await _mediator.Send(createCommand);
-            var user = await Bus.SendCommandAsync(registerCommand);
-            return (Response<Users>)user;
-        }
-        //public void Register(UsersViewModel UsersViewModel, RegisterViewModel RegisterViewModel)
+        //public void Register(UsersViewModel UsersViewModel, RegisterViewModel registerViewModel)
         //{
         //    //这里引入领域设计中的写命令 还没有实现
         //    //请注意这里如果是平时的写法，必须要引入 Users 领域模型，会造成污染
@@ -181,8 +179,8 @@ namespace AGooday.DncZero.Application.Services
         //    var userauth = new UserAuths(Guid.NewGuid())
         //    {
         //        IdentityType = "email",
-        //        Identifier = RegisterViewModel.Identifier,
-        //        Credential = RegisterViewModel.Credential.ToMd5(),
+        //        Identifier = registerViewModel.Identifier,
+        //        Credential = registerViewModel.Credential.ToMd5(),
         //        State = 1,
         //        AuthTime = DateTime.Now,
         //        LastModifiedTime = DateTime.Now,
@@ -192,29 +190,36 @@ namespace AGooday.DncZero.Application.Services
 
         //    Bus.SendCommand(registerCommand);
         //}
+        public async Task<Response<Users>> RegisterAsync(UsersViewModel usersViewModel)
+        {
+            var registerCommand = _mapper.Map<RegisterUsersCommand>(usersViewModel);
+            //var user = await _mediator.Send(registerCommand);
+            var user = await Bus.SendCommandAsync(registerCommand);
+            return (Response<Users>)user;
+        }
         /// <summary>
         /// 注册
         /// </summary>
         /// <param name="RegisterViewModel">注册信息</param>
         /// <returns></returns>
-        public async Task<UsersViewModel> RegisterAsync(RegisterViewModel RegisterViewModel)
+        public async Task<UsersViewModel> RegisterAsync(RegisterViewModel registerViewModel)
         {
             var usermodel = new UsersViewModel()
             {
                 Id = Guid.NewGuid(),
                 Sort = 0,
                 Type = 0,
-                NickName = RegisterViewModel.NickName,
-                Email = RegisterViewModel.Identifier,
+                NickName = registerViewModel.NickName,
+                Email = registerViewModel.Identifier,
                 RegisterTime = DateTime.Now,
-                RegisterIp = RegisterViewModel.IP
+                RegisterIp = registerViewModel.IP
             };
             var userauth = new UserAuths(Guid.NewGuid())
             {
                 UserId = usermodel.Id,
                 IdentityType = "email",
-                Identifier = RegisterViewModel.Identifier,
-                Credential = RegisterViewModel.Credential.ToMd5(),
+                Identifier = registerViewModel.Identifier,
+                Credential = registerViewModel.Credential.ToMd5(),
                 State = 1,
                 AuthTime = DateTime.Now,
                 LastModifiedTime = DateTime.Now,

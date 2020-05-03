@@ -1,4 +1,5 @@
-﻿using AGooday.DncZero.Domain.Interfaces;
+﻿using AGooday.DncZero.Domain.Communication;
+using AGooday.DncZero.Domain.Interfaces;
 using AGooday.DncZero.Domain.Models;
 using AGooday.DncZero.Domain.Queries;
 using AGooday.DncZero.Domain.Queries.Users;
@@ -13,7 +14,8 @@ namespace AGooday.DncZero.Domain.QueryHandler
 {
     public class UsersQueryHandler :
          IRequestHandler<GetByIdQuery<Users>, Users>,
-         IRequestHandler<ListUsersQuery, IEnumerable<Users>>
+         IRequestHandler<UserLoginQuery, Response<Users>>,
+         IRequestHandler<UserListQuery, IEnumerable<Users>>
     {
         private readonly IUsersRepository _usersRepository;
 
@@ -31,9 +33,22 @@ namespace AGooday.DncZero.Domain.QueryHandler
 
             return await _usersRepository.FindByIdAsync(request.Id);
         }
-        public async Task<IEnumerable<Users>> Handle(ListUsersQuery request, CancellationToken cancellationToken)
+
+        public async Task<IEnumerable<Users>> Handle(UserListQuery request, CancellationToken cancellationToken)
         {
             return await _usersRepository.ListAsync();
+        }
+
+        public async Task<Response<Users>> Handle(UserLoginQuery request, CancellationToken cancellationToken)
+        {
+            var user = await _usersRepository.LoginAsync(request.Identifier, request.Credential);
+
+            if (user == null)
+            {
+                return new Response<Users>("User not found.");
+            }
+
+            return new Response<Users>(user);
         }
     }
 }

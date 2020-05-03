@@ -72,7 +72,64 @@ namespace AGooday.DncZero.Web.Controllers
             //var remotePort = connection.RemotePort;            //本地IP端口
 
             model.IP = remoteIpAddress.ToString();
-            var result = await _usersAppService.LoginAsync(model);
+            var response = await _usersAppService.LoginAsync(model);
+
+            if (response.Success)
+            {
+                // 是否存在消息通知
+                if (!_notifications.HasNotifications())
+                    ViewBag.Sucesso = "Login successful!";
+
+                var result = response.Data;
+                var authenType = CookieAuthenticationDefaults.AuthenticationScheme;
+                var claims = new Claim[] {
+                        new Claim(ClaimTypes.Name, result.UserAuths.FirstOrDefault().Identifier),
+                        new Claim("UserId", result.Id.ToString("N")),
+                        new Claim("Avatar", result.Avatar ?? ""),
+                        new Claim("NickName", result.NickName ?? ""),
+                        new Claim("Email", result.Email ?? "")
+                };
+                var identity = new ClaimsIdentity(claims, authenType);
+                var properties = new AuthenticationProperties()
+                {
+                    //Utc过期时长
+                    //ExpiresUtc = DateTime.UtcNow.AddMinutes(20),
+                    //是否持久
+                    IsPersistent = true,
+                    //允许刷新
+                    //AllowRefresh = false
+                };
+                var principal = new ClaimsPrincipal(identity);
+                await HttpContext.SignInAsync(authenType, principal, properties);
+                model.ReturnUrl = model.ReturnUrl.IsNotBlank() ? model.ReturnUrl : "/";
+                return Redirect(model.ReturnUrl);
+            }
+            else
+            {
+                ModelState.AddModelError("Credential", $"{response.Message}，账户或密码错误！");
+            }
+            return View(model);
+        }
+        /// <summary>
+        /// 登录--弃用
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [IgnoreAuth]
+        [HttpPost]
+        public async Task<IActionResult> LoginDisuse(LoginViewModel model)
+        {
+            if (!ModelState.IsValid) return View(model);
+
+            var connection = Request.HttpContext.Features.Get<IHttpConnectionFeature>();
+
+            //var localIpAddress = connection.LocalIpAddress;    //本地IP地址
+            //var localPort = connection.LocalPort;              //本地IP端口
+            var remoteIpAddress = connection.RemoteIpAddress;  //远程IP地址
+            //var remotePort = connection.RemotePort;            //本地IP端口
+
+            model.IP = remoteIpAddress.ToString();
+            var result = _usersAppService.Login(model);
             if (result.LoginSuccess)
             {
                 var authenType = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -113,31 +170,11 @@ namespace AGooday.DncZero.Web.Controllers
         {
             return View();
         }
-
         /// <summary>
         /// 注册
         /// </summary>
+        /// <param name="model"></param>
         /// <returns></returns>
-        [AllowAnonymous]
-        [IgnoreAuth]
-        [HttpPost]
-        public async Task<IActionResult> RegisterDiscard(RegisterViewModel model)
-        {
-            if (!ModelState.IsValid) return View(model);
-            if (model.Credential != model.VerifyPassword)
-            {
-                ModelState.AddModelError(null, "两次密码不一致！");
-                return View(model);
-            }
-
-            var connection = Request.HttpContext.Features.Get<IHttpConnectionFeature>();
-
-            var remoteIpAddress = connection.RemoteIpAddress;  //远程IP地址
-
-            model.IP = remoteIpAddress.ToString();
-            var result = await _usersAppService.RegisterAsync(model);
-            return View(model);
-        }
         [AllowAnonymous]
         [IgnoreAuth]
         [HttpPost]
@@ -149,7 +186,7 @@ namespace AGooday.DncZero.Web.Controllers
                     return View(model);
                 if (model.Credential != model.VerifyPassword)
                 {
-                    ModelState.AddModelError(null, "两次密码不一致！");
+                    ModelState.AddModelError("VerifyPassword", "两次密码不一致！");
                     return View(model);
                 }
 
@@ -220,6 +257,11 @@ namespace AGooday.DncZero.Web.Controllers
                     await HttpContext.SignInAsync(authenType, principal, properties);
                     return RedirectToAction("Index", "Home");
                 }
+                else {
+                    // 是否存在消息通知
+                    if (!_notifications.HasNotifications())
+                        ViewBag.Sucesso = "Users Registered!";
+                }
 
                 return View(model);
             }
@@ -227,6 +269,30 @@ namespace AGooday.DncZero.Web.Controllers
             {
                 return View(e.Message);
             }
+        }
+        /// <summary>
+        /// 注册--弃用
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [IgnoreAuth]
+        [HttpPost]
+        public async Task<IActionResult> RegisterDisuse(RegisterViewModel model)
+        {
+            if (!ModelState.IsValid) return View(model);
+            if (model.Credential != model.VerifyPassword)
+            {
+                ModelState.AddModelError(null, "两次密码不一致！");
+                return View(model);
+            }
+
+            var connection = Request.HttpContext.Features.Get<IHttpConnectionFeature>();
+
+            var remoteIpAddress = connection.RemoteIpAddress;  //远程IP地址
+
+            model.IP = remoteIpAddress.ToString();
+            var result = await _usersAppService.RegisterAsync(model);
+            return View(model);
         }
         #endregion
         #region 个人资料

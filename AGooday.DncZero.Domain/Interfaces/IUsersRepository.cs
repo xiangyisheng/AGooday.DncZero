@@ -19,7 +19,7 @@ namespace AGooday.DncZero.Domain.Interfaces
         /// <returns></returns>
         Users GetByName(string name);
         Users GetByEmail(string email);
-
+        Users Login(string identifier, string credential);
         Task<Users> LoginAsync(string identifier, string credential);
         Task<Users> RegisterAsync(Users user,UserAuths userauth);
         /// <summary>
@@ -31,7 +31,8 @@ namespace AGooday.DncZero.Domain.Interfaces
         bool HasMenusAuthority(Guid userId, string url);
         Users GetUserById(Guid userId);
         Task<Users> GetUserByIdAsync(Guid userId);
-        Task<List<Users>> GetUsers();
+        List<Users> GetUsers();
+        Task<List<Users>> GetUsersAsync();
         IList<Menus> GetAllMenus(Guid userId);
     }
 }

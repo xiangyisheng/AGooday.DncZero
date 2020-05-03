@@ -20,26 +20,27 @@ namespace AGooday.DncZero.Application.Interfaces
         Task<IEnumerable<UsersViewModel>> ListAsync();
         UsersViewModel GetById(Guid id);
         Task<UsersViewModel> FindByIdAsync(Guid id);
-        void Update(UsersViewModel UsersViewModel);
-        Task<Response<Users>> ModifyAsync(UsersViewModel UsersViewModel);
+        void Update(UsersViewModel usersViewModel);
+        Task<Response<Users>> ModifyAsync(UsersViewModel usersViewModel);
         void Remove(Guid id);
         IList<UsersHistoryData> GetAllHistory(Guid id);
 
         /// <summary>
-        /// 登陆
+        /// 登录
         /// </summary>
         /// <param name="dto">登录信息</param>
         /// <returns></returns>
-        Task<LoginResultViewModel> LoginAsync(LoginViewModel LoginViewModel);
+        LoginResultViewModel Login(LoginViewModel loginViewModel);
+        Task<Response<Users>> LoginAsync(LoginViewModel loginViewModel);
         void Create(UsersViewModel UsersViewModel);
-        Task<Response<Users>> RegisterAsync(UsersViewModel LoginViewModel);
+        Task<Response<Users>> RegisterAsync(UsersViewModel loginViewModel);
         //void Register(UsersViewModel UsersViewModel, RegisterViewModel RegisterViewModel);
         /// <summary>
         /// 注册
         /// </summary>
         /// <param name="dto">登录信息</param>
         /// <returns></returns>
-        Task<UsersViewModel> RegisterAsync(RegisterViewModel RegisterViewModel);
+        Task<UsersViewModel> RegisterAsync(RegisterViewModel registerViewModel);
         /// <summary>
         /// 是否拥有此权限
         /// </summary>

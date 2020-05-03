@@ -80,7 +80,8 @@ namespace AGooday.DncZero.Web.Extensions
             services.AddScoped<IRequestHandler<RemoveUsersCommand, Unit>, UsersCommandHandler>();
 
             services.AddScoped<IRequestHandler<GetByIdQuery<Users>, Users>, UsersQueryHandler>();
-            services.AddScoped<IRequestHandler<ListUsersQuery, IEnumerable<Users>>, UsersQueryHandler>();
+            services.AddScoped<IRequestHandler<UserListQuery, IEnumerable<Users>>, UsersQueryHandler>();
+            services.AddScoped<IRequestHandler<UserLoginQuery, Response<Users>>, UsersQueryHandler>();
 
             // 领域层 - Memory缓存
             services.AddSingleton<IMemoryCache>(factory =>

@@ -48,38 +48,60 @@ namespace AGooday.DncZero.Infrastructure.Repository
         public Users GetUserById(Guid userId)
         {
             var user = Db.Users.Include(x => x.UserAuths).FirstOrDefault();
-            var reslt = user;
-            return reslt;
+            var result = user;
+            return result;
         }
         public async Task<Users> GetUserByIdAsync(Guid userId)
         {
             var user = await Db.Users.Include(x => x.UserAuths).FirstOrDefaultAsync();
-            var reslt = user;
-            return reslt;
+            var result = user;
+            return result;
         }
-        public async Task<List<Users>> GetUsers()
+        public List<Users> GetUsers()
         {
-            var users = await Db.Users.Include(x=>x.UserAuths).ToListAsync();
-            var reslt = users;
-            return reslt;
+            var users = Db.Users.Include(x => x.UserAuths).ToList();
+            var result = users;
+            return result;
+        }
+        public async Task<List<Users>> GetUsersAsync()
+        {
+            var users = await Db.Users.Include(x => x.UserAuths).ToListAsync();
+            var result = users;
+            return result;
         }
 
-        public async Task<Users> LoginAsync(string identifier, string credential)
+        public Users Login(string identifier, string credential)
         {
             var logDbSet = Db.LoginLogs;
-            var entity = await DbSet
+            var entity = DbSet
                 .Join(Db.UserAuths, a => a.Id, b => b.UserId, (a, b) => new { a, b }).Where(w => w.b.Identifier == identifier && w.b.Credential == credential)
-                .FirstOrDefaultAsync();
-            var reslt = entity.a;
-            return reslt;
+                .FirstOrDefault();
+            var result = entity.a;
+            return result;
+        }
+        public async Task<Users> LoginAsync(string identifier, string credential)
+        {
+            //var _user = await DbSet.Include(x => x.UserAuths.Where(w => w.Identifier == identifier && w.Credential == credential)).FirstOrDefaultAsync();
+
+            var userauth = Db.UserAuths.Where(w => w.Identifier == identifier && w.Credential == credential).FirstOrDefault();
+            if (userauth != null)
+            {
+                var user = await DbSet.Include(x => x.UserAuths).Where(w => w.Id == userauth.UserId).FirstOrDefaultAsync();
+                var result = user;
+                return result;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public async Task<Users> RegisterAsync(Users user, UserAuths userauth)
         {
             Db.Users.Add(user);
             Db.UserAuths.Add(userauth);
-            var reslt = await Db.SaveChangesAsync();
-            if (reslt > 0)
+            var result = await Db.SaveChangesAsync();
+            if (result > 0)
             {
                 var entity = await DbSet.Where(x => x.Id == user.Id).FirstOrDefaultAsync();
                 return entity;
