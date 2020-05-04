@@ -34,6 +34,9 @@ namespace AGooday.DncZero.Web.Filters
             var authorityAppService = filterContext.HttpContext.RequestServices.GetService<IUsersAppService>();
 
             var context = filterContext.HttpContext;
+
+            var claims = context.User.Claims;
+
             var identity = context.User.Identity;
             var routeData = filterContext.RouteData.Values;
             var controller = routeData["controller"];

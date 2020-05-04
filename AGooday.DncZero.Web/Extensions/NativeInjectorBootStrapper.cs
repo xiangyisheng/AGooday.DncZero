@@ -79,7 +79,7 @@ namespace AGooday.DncZero.Web.Extensions
             services.AddScoped<IRequestHandler<ModifyUsersCommand, Response<Users>>, UsersCommandHandler>();
             services.AddScoped<IRequestHandler<RemoveUsersCommand, Unit>, UsersCommandHandler>();
 
-            services.AddScoped<IRequestHandler<GetByIdQuery<Users>, Users>, UsersQueryHandler>();
+            services.AddScoped<IRequestHandler<GetByIdQuery<Users, Guid>, Users>, UsersQueryHandler>();
             services.AddScoped<IRequestHandler<UserListQuery, IEnumerable<Users>>, UsersQueryHandler>();
             services.AddScoped<IRequestHandler<UserLoginQuery, Response<Users>>, UsersQueryHandler>();
 

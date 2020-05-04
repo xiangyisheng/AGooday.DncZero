@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace AGooday.DncZero.Domain.QueryHandler
 {
     public class UsersQueryHandler :
-         IRequestHandler<GetByIdQuery<Users>, Users>,
+         IRequestHandler<GetByIdQuery<Users, Guid>, Users>,
          IRequestHandler<UserLoginQuery, Response<Users>>,
          IRequestHandler<UserListQuery, IEnumerable<Users>>
     {
@@ -24,7 +24,7 @@ namespace AGooday.DncZero.Domain.QueryHandler
             _usersRepository = usersRepository;
         }
 
-        public async Task<Users> Handle(GetByIdQuery<Users> request, CancellationToken cancellationToken)
+        public async Task<Users> Handle(GetByIdQuery<Users, Guid> request, CancellationToken cancellationToken)
         {
             if (request.Id == Guid.Empty)
             {
@@ -42,6 +42,8 @@ namespace AGooday.DncZero.Domain.QueryHandler
         public async Task<Response<Users>> Handle(UserLoginQuery request, CancellationToken cancellationToken)
         {
             var user = await _usersRepository.LoginAsync(request.Identifier, request.Credential);
+
+            //登录日志
 
             if (user == null)
             {

@@ -5,11 +5,11 @@ using System.Text;
 
 namespace AGooday.DncZero.Domain.Queries
 {
-    public class GetByIdQuery<T> : IRequest<T>
+    public class GetByIdQuery<TEntity, TPrimaryKey> : IRequest<TEntity>
     {
-        public Guid Id { get; private set; }
+        public TPrimaryKey Id { get; private set; }
 
-        public GetByIdQuery(Guid id)
+        public GetByIdQuery(TPrimaryKey id)
         {
             this.Id = id;
         }

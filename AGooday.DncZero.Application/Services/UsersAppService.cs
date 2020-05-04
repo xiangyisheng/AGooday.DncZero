@@ -78,10 +78,10 @@ namespace AGooday.DncZero.Application.Services
 
         public async Task<UsersViewModel> FindByIdAsync(Guid id)
         {
-            var query = new GetByIdQuery<Users>(id);
+            var query = new GetByIdQuery<Users, Guid>(id);
             //var user = await _mediator.Send(new GetByIdQuery<Users>(id));
             //var user = await Bus.SendQuery<GetByIdQuery<Users>>(new GetByIdQuery<Users>(id));
-            var user = await Bus.SendQuery(new GetByIdQuery<Users>(id));
+            var user = await Bus.SendQuery(new GetByIdQuery<Users, Guid>(id));
             return _mapper.Map<UsersViewModel>(user);
         }
 
@@ -243,7 +243,7 @@ namespace AGooday.DncZero.Application.Services
 
         public IList<MenusViewModel> GetAllMenus(Guid userId)
         {
-            return _mapper.Map<IList<MenusViewModel>>(_usersRepository.GetAllMenus(userId));;
+            return _mapper.Map<IList<MenusViewModel>>(_usersRepository.GetAllMenus(userId)); ;
         }
     }
 }
