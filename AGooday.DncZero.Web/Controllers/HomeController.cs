@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AGooday.DncZero.Web.Filters;
 using AGooday.DncZero.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -13,6 +14,7 @@ namespace AGooday.DncZero.Web.Controllers
     [IgnoreAuth]
     public class HomeController : BaseController
     {
+        [AllowAnonymous]
         public IActionResult Index()
         {
             //若是HttpContext.User.Identity.IsAuthenticated为true，

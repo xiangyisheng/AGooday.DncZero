@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AGooday.DncZero.API</name>
+    </assembly>
+    <members>
+        <member name="M:AGooday.DncZero.API.Controllers.WeatherForecastController.Get">
+            <summary>
+            获取天气预报
+            </summary>
+            <returns>天气预报</returns>
+            <response code="200">响应成功</response>
+            <response code="400">异常请求</response>    
+        </member>
+        <member name="T:AGooday.DncZero.API.WeatherForecast">
+            <summary>
+            天气预报
+            </summary>
+        </member>
+        <member name="P:AGooday.DncZero.API.WeatherForecast.Date">
+            <summary>
+            日期时间
+            </summary>
+        </member>
+        <member name="P:AGooday.DncZero.API.WeatherForecast.TemperatureC">
+            <summary>
+            摄氏度
+            </summary>
+        </member>
+        <member name="P:AGooday.DncZero.API.WeatherForecast.TemperatureF">
+            <summary>
+            华氏度
+            </summary>
+        </member>
+        <member name="P:AGooday.DncZero.API.WeatherForecast.Summary">
+            <summary>
+            综上所述
+            </summary>
+        </member>
+    </members>
+</doc>

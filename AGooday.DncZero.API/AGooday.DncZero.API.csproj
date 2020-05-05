@@ -4,5 +4,18 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <!--生成文档文件-->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!--文档文件-->
+    <DocumentationFile>F:\AGooday\AGooday.DncZero\AGooday.DncZero.API\AGooday.DncZero.API.xml</DocumentationFile>
+    <!--以分号分隔的警告代码列表。 将警告代码追加到 $(NoWarn)-->
+    <NoWarn>$(NoWarn);1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0" />
+  </ItemGroup>
+
 
 </Project>

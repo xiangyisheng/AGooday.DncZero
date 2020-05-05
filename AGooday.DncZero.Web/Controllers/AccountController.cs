@@ -15,6 +15,7 @@ using AGooday.DncZero.Application.Interfaces;
 using AGooday.DncZero.Web.Filters;
 using AGooday.DncZero.Domain.Core.Notifications;
 using MediatR;
+using AGooday.DncZero.Domain.Models;
 
 namespace AGooday.DncZero.Web.Controllers
 {
@@ -80,27 +81,8 @@ namespace AGooday.DncZero.Web.Controllers
                 if (!_notifications.HasNotifications())
                     ViewBag.Sucesso = "Login successful!";
 
-                var result = response.Data;
-                var authenType = CookieAuthenticationDefaults.AuthenticationScheme;
-                var claims = new Claim[] {
-                        new Claim(ClaimTypes.Name, result.UserAuths.FirstOrDefault().Identifier),
-                        new Claim("UserId", result.Id.ToString("N")),
-                        new Claim("Avatar", result.Avatar ?? ""),
-                        new Claim("NickName", result.NickName ?? ""),
-                        new Claim("Email", result.Email ?? "")
-                };
-                var identity = new ClaimsIdentity(claims, authenType);
-                var properties = new AuthenticationProperties()
-                {
-                    //Utc过期时长
-                    //ExpiresUtc = DateTime.UtcNow.AddMinutes(20),
-                    //是否持久
-                    IsPersistent = true,
-                    //允许刷新
-                    //AllowRefresh = false
-                };
-                var principal = new ClaimsPrincipal(identity);
-                await HttpContext.SignInAsync(authenType, principal, properties);
+                await SignInAsync(response.Data);
+
                 model.ReturnUrl = model.ReturnUrl.IsNotBlank() ? model.ReturnUrl : "/";
                 return Redirect(model.ReturnUrl);
             }
@@ -234,33 +216,13 @@ namespace AGooday.DncZero.Web.Controllers
 
                 if (response.Success)
                 {
-                    var result = response.Data;
-                    var authenType = CookieAuthenticationDefaults.AuthenticationScheme;
-                    var claims = new Claim[] {
-                        new Claim(ClaimTypes.Name, result.UserAuths.FirstOrDefault().Identifier),
-                        new Claim("UserId", result.Id.ToString("N")),
-                        new Claim("Avatar", result.Avatar ?? ""),
-                        new Claim("NickName", result.NickName ?? ""),
-                        new Claim("Email", result.Email ?? "")
-                    };
-                    var identity = new ClaimsIdentity(claims, authenType);
-                    var properties = new AuthenticationProperties()
-                    {
-                        //Utc过期时长
-                        //ExpiresUtc = DateTime.UtcNow.AddMinutes(20),
-                        //是否持久
-                        IsPersistent = true,
-                        //允许刷新
-                        //AllowRefresh = false
-                    };
-                    var principal = new ClaimsPrincipal(identity);
-                    await HttpContext.SignInAsync(authenType, principal, properties);
+                    await SignInAsync(response.Data);
                     return RedirectToAction("Index", "Home");
                 }
                 else {
                     // 是否存在消息通知
                     if (!_notifications.HasNotifications())
-                        ViewBag.Sucesso = "Users Registered!";
+                        ModelState.AddModelError("VerifyPassword", $"{response.Message}");
                 }
 
                 return View(model);
@@ -330,5 +292,30 @@ namespace AGooday.DncZero.Web.Controllers
             return RedirectToAction("Login");
         }
         #endregion
+
+        private async Task SignInAsync(Users users)
+        {
+            var result = users;
+            var authenType = CookieAuthenticationDefaults.AuthenticationScheme;
+            var claims = new Claim[] {
+                        new Claim(ClaimTypes.Name, result.UserAuths.FirstOrDefault().Identifier),
+                        new Claim("UserId", result.Id.ToString("N")),
+                        new Claim("Avatar", result.Avatar ?? ""),
+                        new Claim("NickName", result.NickName ?? ""),
+                        new Claim("Email", result.Email ?? "")
+                };
+            var identity = new ClaimsIdentity(claims, authenType);
+            var properties = new AuthenticationProperties()
+            {
+                //Utc过期时长
+                //ExpiresUtc = DateTime.UtcNow.AddMinutes(20),
+                //是否持久
+                IsPersistent = true,
+                //允许刷新
+                //AllowRefresh = false
+            };
+            var principal = new ClaimsPrincipal(identity);
+            await HttpContext.SignInAsync(authenType, principal, properties);
+        }
     }
 }

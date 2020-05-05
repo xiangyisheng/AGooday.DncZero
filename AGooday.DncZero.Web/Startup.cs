@@ -78,7 +78,7 @@ namespace AGooday.DncZero.Web
                     o.LoginPath = new PathString("/Account/Login");
                     o.LogoutPath = new PathString("/Account/Logout");
                     //禁止访问路径：当用户试图访问资源时，但未通过该资源的任何授权策略，请求将被重定向到这个相对路径
-                    o.AccessDeniedPath = new PathString("/Home/Privacy");
+                    o.AccessDeniedPath = new PathString("/Home/Index");
 
                     o.Cookie = new CookieBuilder
                     {
