@@ -119,6 +119,7 @@ namespace AGooday.DncZero.Application.Services
         /// </summary>
         /// <param name="dto">登录信息</param>
         /// <returns></returns>
+        [Obsolete("This function is obsolete", false)]
         public LoginResultViewModel Login(LoginViewModel loginViewModel)
         {
             var result = new LoginResultViewModel();
@@ -197,11 +198,13 @@ namespace AGooday.DncZero.Application.Services
             var user = await Bus.SendCommandAsync(registerCommand);
             return (Response<Users>)user;
         }
+
         /// <summary>
         /// 注册
         /// </summary>
         /// <param name="RegisterViewModel">注册信息</param>
         /// <returns></returns>
+        [Obsolete("This function is obsolete", false)]
         public async Task<UsersViewModel> RegisterAsync(RegisterViewModel registerViewModel)
         {
             var usermodel = new UsersViewModel()

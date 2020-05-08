@@ -70,6 +70,7 @@ namespace AGooday.DncZero.Infrastructure.Repository
             return result;
         }
 
+        [Obsolete("This function is obsolete", false)]
         public Users Login(string identifier, string credential)
         {
             var logDbSet = Db.LoginLogs;
@@ -96,6 +97,7 @@ namespace AGooday.DncZero.Infrastructure.Repository
             }
         }
 
+        [Obsolete("This function is obsolete", false)]
         public async Task<Users> RegisterAsync(Users user, UserAuths userauth)
         {
             Db.Users.Add(user);

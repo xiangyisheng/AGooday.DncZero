@@ -10,6 +10,8 @@ namespace AGooday.DncZero.Domain.EventHandlers
 {
     public class UsersEventHandler :
         INotificationHandler<UsersRegisteredEvent>,
+        INotificationHandler<UsersCreatedEvent>,
+        INotificationHandler<UsersModifiedEvent>,
         INotificationHandler<UsersUpdatedEvent>,
         INotificationHandler<UsersRemovedEvent>
     {
@@ -21,8 +23,22 @@ namespace AGooday.DncZero.Domain.EventHandlers
             return Task.CompletedTask;
         }
 
+        public Task Handle(UsersCreatedEvent message, CancellationToken cancellationToken)
+        {
+            // 恭喜您，注册成功，欢迎加入我们。
+
+            return Task.CompletedTask;
+        }
+
         // Users 被修改成功后的事件处理方法
         public Task Handle(UsersUpdatedEvent message, CancellationToken cancellationToken)
+        {
+            // 恭喜您，更新成功，请牢记修改后的信息。
+
+            return Task.CompletedTask;
+        }
+
+        public Task Handle(UsersModifiedEvent message, CancellationToken cancellationToken)
         {
             // 恭喜您，更新成功，请牢记修改后的信息。
 

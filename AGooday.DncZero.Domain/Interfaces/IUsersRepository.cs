@@ -19,8 +19,10 @@ namespace AGooday.DncZero.Domain.Interfaces
         /// <returns></returns>
         Users GetByName(string name);
         Users GetByEmail(string email);
+        [Obsolete("This function is obsolete", false)]
         Users Login(string identifier, string credential);
         Task<Users> LoginAsync(string identifier, string credential);
+        [Obsolete("This function is obsolete", false)]
         Task<Users> RegisterAsync(Users user,UserAuths userauth);
         /// <summary>
         /// 是否拥有此权限

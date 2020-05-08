@@ -68,6 +68,8 @@ namespace AGooday.DncZero.Web.Extensions
             services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
             // 领域事件
             services.AddScoped<INotificationHandler<UsersRegisteredEvent>, UsersEventHandler>();
+            services.AddScoped<INotificationHandler<UsersCreatedEvent>, UsersEventHandler>();
+            services.AddScoped<INotificationHandler<UsersModifiedEvent>, UsersEventHandler>();
             services.AddScoped<INotificationHandler<UsersUpdatedEvent>, UsersEventHandler>();
             services.AddScoped<INotificationHandler<UsersRemovedEvent>, UsersEventHandler>();
 

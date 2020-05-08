@@ -67,6 +67,8 @@ namespace AGooday.DncZero.Web.Controllers
 
             var connection = Request.HttpContext.Features.Get<IHttpConnectionFeature>();
 
+            var ip = HttpContext.Connection.RemoteIpAddress.ToIPv4String();
+
             //var localIpAddress = connection.LocalIpAddress;    //本地IP地址
             //var localPort = connection.LocalPort;              //本地IP端口
             var remoteIpAddress = connection.RemoteIpAddress;  //远程IP地址
@@ -99,6 +101,7 @@ namespace AGooday.DncZero.Web.Controllers
         [AllowAnonymous]
         [IgnoreAuth]
         [HttpPost]
+        [Obsolete]//过时弃用
         public async Task<IActionResult> LoginDisuse(LoginViewModel model)
         {
             if (!ModelState.IsValid) return View(model);
@@ -239,6 +242,7 @@ namespace AGooday.DncZero.Web.Controllers
         [AllowAnonymous]
         [IgnoreAuth]
         [HttpPost]
+        [Obsolete]
         public async Task<IActionResult> RegisterDisuse(RegisterViewModel model)
         {
             if (!ModelState.IsValid) return View(model);

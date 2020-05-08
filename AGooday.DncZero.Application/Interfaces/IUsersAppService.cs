@@ -30,6 +30,7 @@ namespace AGooday.DncZero.Application.Interfaces
         /// </summary>
         /// <param name="dto">登录信息</param>
         /// <returns></returns>
+        [Obsolete("This function is obsolete", false)]
         LoginResultViewModel Login(LoginViewModel loginViewModel);
         Task<Response<Users>> LoginAsync(LoginViewModel loginViewModel);
         void Create(UsersViewModel UsersViewModel);
@@ -40,6 +41,7 @@ namespace AGooday.DncZero.Application.Interfaces
         /// </summary>
         /// <param name="dto">登录信息</param>
         /// <returns></returns>
+        [Obsolete("This function is obsolete", false)]
         Task<UsersViewModel> RegisterAsync(RegisterViewModel registerViewModel);
         /// <summary>
         /// 是否拥有此权限
