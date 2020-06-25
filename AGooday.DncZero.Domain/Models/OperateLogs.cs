@@ -10,6 +10,10 @@ namespace AGooday.DncZero.Domain.Models
     /// </summary>
     public class OperateLogs : Entity<Guid>
     {
+        public OperateLogs()
+        {
+            DataLogs = new List<DataLogs>();
+        }
         /// <summary>
         /// 名称
         /// </summary>
@@ -30,5 +34,10 @@ namespace AGooday.DncZero.Domain.Models
         /// 创建时间
         /// </summary>
         public DateTime CreatedTime { get; private set; }
+
+        /// <summary>
+        /// 数据日志集合
+        /// </summary>
+        public virtual ICollection<DataLogs> DataLogs { get; set; }
     }
 }

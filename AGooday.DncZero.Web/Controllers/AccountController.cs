@@ -25,6 +25,7 @@ namespace AGooday.DncZero.Web.Controllers
         private readonly IUsersAppService _usersAppService;
         // 将领域通知处理程序注入Controller
         private readonly DomainNotificationHandler _notifications;
+
         public AccountController(ILogger<UsersController> logger, IUsersAppService usersAppService, INotificationHandler<DomainNotification> notifications)
         {
             _logger = logger;
@@ -73,7 +74,12 @@ namespace AGooday.DncZero.Web.Controllers
             //var localPort = connection.LocalPort;              //本地IP端口
             var remoteIpAddress = connection.RemoteIpAddress;  //远程IP地址
             //var remotePort = connection.RemotePort;            //本地IP端口
-
+            //_logger.LogWarning("登录开始");
+            //_logger.LogInformation($"登录开始!");
+            _logger.LogDebug("LogDebug");
+            _logger.LogError("LogError");
+            _logger.LogInformation($"LogInformation{model.Identifier}");
+            _logger.LogWarning("LogWarning");
             model.IP = remoteIpAddress.ToString();
             var response = await _usersAppService.LoginAsync(model);
 

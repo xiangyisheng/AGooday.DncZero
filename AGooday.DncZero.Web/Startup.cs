@@ -18,6 +18,7 @@ using AGooday.DncZero.Infrastructure.Identity.Data;
 using AGooday.DncZero.Common.DB;
 using AGooday.DncZero.Web.Filters;
 using Newtonsoft.Json;
+using Microsoft.Extensions.Logging;
 
 namespace AGooday.DncZero.Web
 {
@@ -59,6 +60,8 @@ namespace AGooday.DncZero.Web
             });
 
             services.AddSingleton(new Appsettings(Env.ContentRootPath));
+
+            services.AddSingleton<ILoggerProvider, Log4NetLoggerProvider>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
                //options.UseSqlServer(BaseDBConfig.GetConnectionString(Configuration.GetConnectionString("DefaultConnectionFile"), Configuration.GetConnectionString("DefaultConnection")))

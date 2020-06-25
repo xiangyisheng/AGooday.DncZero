@@ -1,4 +1,5 @@
-﻿using AGooday.DncZero.Domain.Core.Models;
+﻿using AGooday.DncZero.Common.Enumerator;
+using AGooday.DncZero.Domain.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,49 +11,50 @@ namespace AGooday.DncZero.Domain.Models
     /// </summary>
     public class DataLogs : Entity<Guid>
     {
+        public DataLogs()
+           : this(null, null, OperatingType.Query)
+        { }
+        public DataLogs(string name, string entityName, OperatingType type)
+        {
+            Name = name;
+            Type = type;
+            EntityName = entityName;
+            //LogItems = new List<DataLogItems>();
+        }
+
         /// <summary>
         /// 名称
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; set; }
         /// <summary>
         /// 实体
         /// </summary>
-        public string Entity { get; private set; }
+        public string Entity { get; set; }
         /// <summary>
         /// 实体名称
         /// </summary>
-        public string EntityName { get; private set; }
+        public string EntityName { get; set; }
         /// <summary>
         /// 实体主键值
         /// </summary>
-        public string EntityKey { get; private set; }
+        public string EntityKey { get; set; }
         /// <summary>
         /// 操作类型（0：查询[Query] 10：新建[Insert] 20：更新[Update] 30：删除[Delete]）
         /// </summary>
-        public string OperateType { get; private set; }
+        //public int OperateType { get; private set; }
+        public OperatingType Type { get; set; }
         /// <summary>
         /// 操作日志ID
         /// </summary>
-        public Guid OperateLogId { get; private set; }
+        public Guid OperateLogId { get; set; }
+
         /// <summary>
-        /// 字段
+        /// 操作日志信息
         /// </summary>
-        public string Field { get; private set; }
+        public virtual OperateLogs OperateLog { get; set; }
         /// <summary>
-        /// 字段名称
+        /// 操作明细
         /// </summary>
-        public string FieldName { get; private set; }
-        /// <summary>
-        /// 原值
-        /// </summary>
-        public string OriginalValue { get; private set; }
-        /// <summary>
-        /// 新值
-        /// </summary>
-        public string NewValue { get; private set; }
-        /// <summary>
-        /// 数据类型
-        /// </summary>
-        public string DataType { get; private set; }
+        public virtual ICollection<DataLogItems> LogItems { get; set; } = new List<DataLogItems>();
     }
 }
