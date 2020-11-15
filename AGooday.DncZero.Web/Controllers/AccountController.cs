@@ -91,7 +91,10 @@ namespace AGooday.DncZero.Web.Controllers
 
                 await SignInAsync(response.Data);
 
-                model.ReturnUrl = model.ReturnUrl.IsNotBlank() ? model.ReturnUrl : "/";
+                model.ReturnUrl = model.ReturnUrl.IsNotBlank()
+                    //阻止 ASP.NET Core 中的开放重定向攻击：https://docs.microsoft.com/zh-cn/aspnet/core/security/preventing-open-redirects?view=aspnetcore-5.0
+                    && Url.IsLocalUrl(model.ReturnUrl)//检查 URL 是否是本地的，防止用户无意中重定向到恶意网站。
+                    ? model.ReturnUrl : "/";
                 return Redirect(model.ReturnUrl);
             }
             else
@@ -143,7 +146,7 @@ namespace AGooday.DncZero.Web.Controllers
                 };
                 var principal = new ClaimsPrincipal(identity);
                 await HttpContext.SignInAsync(authenType, principal, properties);
-                model.ReturnUrl = model.ReturnUrl.IsNotBlank() ? model.ReturnUrl : "/";
+                model.ReturnUrl = model.ReturnUrl.IsNotBlank() && Url.IsLocalUrl(model.ReturnUrl) ? model.ReturnUrl : "/";
                 return Redirect(model.ReturnUrl);
             }
             //ModelState.AddModelError("登录失败");
@@ -228,7 +231,8 @@ namespace AGooday.DncZero.Web.Controllers
                     await SignInAsync(response.Data);
                     return RedirectToAction("Index", "Home");
                 }
-                else {
+                else
+                {
                     // 是否存在消息通知
                     if (!_notifications.HasNotifications())
                         ModelState.AddModelError("VerifyPassword", $"{response.Message}");

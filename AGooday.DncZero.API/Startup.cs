@@ -80,8 +80,10 @@ namespace AGooday.DncZero.API
                 //c.RoutePrefix = string.Empty;
             });
 
+            // 使用路由
             app.UseRouting();
 
+            // 使用授权
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

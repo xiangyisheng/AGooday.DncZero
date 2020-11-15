@@ -16,13 +16,17 @@ namespace AGooday.DncZero.Application.ViewModels
         /// 登录名
         /// </summary>
         [Display(Name = "账号"), Required, MinLength(4), MaxLength(20)]
-        [RegularExpression(@"^([\w-\.]+)@([\w-\.]+)(\.[a-zA-Z0-9]+)$", ErrorMessage = "登录账号必须有效邮箱地址")]
+        //[RegularExpression(@"^([\w-\.]+)@([\w-\.]+)(\.[a-zA-Z0-9]+)$", ErrorMessage = "登录账号必须有效邮箱地址")]
+        [UIHint("email")]
+        [DataType(DataType.EmailAddress)]
         public string Identifier { get; set; }
 
         /// <summary>
         /// 密码
         /// </summary>
         [Display(Name = "密码")]
+        [UIHint("password")]
+        [DataType(DataType.Password)]
         [Required, MinLength(6), MaxLength(12)]
         public string Credential { get; set; }
 
@@ -30,6 +34,8 @@ namespace AGooday.DncZero.Application.ViewModels
         /// 确认密码
         /// </summary>
         [Display(Name = "确认密码")]
+        [UIHint("password")]
+        [DataType(DataType.Password)]
         [Required, MinLength(6), MaxLength(12)]
 
         public string VerifyPassword { get; set; }

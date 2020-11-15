@@ -73,17 +73,20 @@ namespace AGooday.DncZero.Web
             //    .AddDefaultTokenProviders();
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(o =>
+                .AddCookie(options =>
                 {
                     //cookie默认有效时间为8个小时
-                    o.ExpireTimeSpan = TimeSpan.FromMinutes(480);
+                    options.ExpireTimeSpan = TimeSpan.FromMinutes(480);
                     //登录路径：这是当用户试图访问资源但未经过身份验证时，程序将会将请求重定向到这个相对路径
-                    o.LoginPath = new PathString("/Account/Login");
-                    o.LogoutPath = new PathString("/Account/Logout");
+                    options.LoginPath = new PathString("/Account/Login");
+                    //重定向通常包括 returnUrl 查询字符串参数，以便用户在成功登录后可以返回到最初请求的 URL。 用户进行身份验证后，会重定向到最初请求的 URL。
+                    //默认参数名称是“ReturnUrl”，可以通过 ReturnUrlParameter 重新设置。
+                    //options.ReturnUrlParameter = "ReturnUrl";
+                    options.LogoutPath = new PathString("/Account/Logout");
                     //禁止访问路径：当用户试图访问资源时，但未通过该资源的任何授权策略，请求将被重定向到这个相对路径
-                    o.AccessDeniedPath = new PathString("/Home/Index");
+                    options.AccessDeniedPath = new PathString("/Home/Index");
 
-                    o.Cookie = new CookieBuilder
+                    options.Cookie = new CookieBuilder
                     {
                         HttpOnly = true,
                         Name = "AGooday.DncZero.Identity",
