@@ -11,5 +11,6 @@ namespace AGooday.DncZero.Domain.Interfaces
     /// </summary>
     public interface IMenusRepository : IRepository<Menus, Guid>
     {
+        Menus GetByName(string name);
     }
 }

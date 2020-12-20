@@ -42,7 +42,6 @@ namespace AGooday.DncZero.Web.Controllers
         /// 登录
         /// </summary>
         /// <returns></returns>
-        [AllowAnonymous]
         [IgnoreAuth]
         public IActionResult Login(string returnUrl = null)
         {
@@ -59,7 +58,6 @@ namespace AGooday.DncZero.Web.Controllers
         /// 登录
         /// </summary>
         /// <returns></returns>
-        [AllowAnonymous]
         [IgnoreAuth]
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
@@ -107,7 +105,6 @@ namespace AGooday.DncZero.Web.Controllers
         /// 登录--弃用
         /// </summary>
         /// <returns></returns>
-        [AllowAnonymous]
         [IgnoreAuth]
         [HttpPost]
         [Obsolete]//过时弃用
@@ -158,7 +155,6 @@ namespace AGooday.DncZero.Web.Controllers
         /// 注册
         /// </summary>
         /// <returns></returns>
-        [AllowAnonymous]
         [IgnoreAuth]
         public IActionResult Register()
         {
@@ -169,7 +165,6 @@ namespace AGooday.DncZero.Web.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [AllowAnonymous]
         [IgnoreAuth]
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
@@ -249,7 +244,6 @@ namespace AGooday.DncZero.Web.Controllers
         /// 注册--弃用
         /// </summary>
         /// <returns></returns>
-        [AllowAnonymous]
         [IgnoreAuth]
         [HttpPost]
         [Obsolete]
@@ -276,7 +270,6 @@ namespace AGooday.DncZero.Web.Controllers
         /// 个人资料
         /// </summary>
         /// <returns></returns>
-        [AllowAnonymous]
         [IgnoreAuth]
         public IActionResult Profile()
         {
@@ -287,7 +280,6 @@ namespace AGooday.DncZero.Web.Controllers
         /// 个人资料
         /// </summary>
         /// <returns></returns>
-        [AllowAnonymous]
         [IgnoreAuth]
         [HttpPost]
         public async Task<IActionResult> Profile(ProfileViewModel model)

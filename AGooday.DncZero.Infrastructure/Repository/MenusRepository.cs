@@ -15,5 +15,9 @@ namespace AGooday.DncZero.Infrastructure.Repository
             : base(context)
         {
         }
+        public Menus GetByName(string name)
+        {
+            return DbSet.AsNoTracking().FirstOrDefault(c => c.Name == name);
+        }
     }
 }

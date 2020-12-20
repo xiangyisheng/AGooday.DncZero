@@ -1,19 +1,70 @@
-﻿using AGooday.DncZero.Domain.Core.Models;
+﻿using AGooday.DncZero.Domain.Communication;
+using AGooday.DncZero.Domain.Core.Commands;
+using AGooday.DncZero.Domain.Models;
+using AGooday.DncZero.Domain.Validations.Menus;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AGooday.DncZero.Domain.Models
+namespace AGooday.DncZero.Domain.Commands.Menus
 {
     /// <summary>
-    /// 菜单
+    /// 注册一个添加 Menus 命令
+    /// 基础抽象菜单命令模型
     /// </summary>
-    public class Menus : SortableEntity<Guid, long>
+    public class CreateMenusCommand : MenusCommand
     {
+        // set 受保护，只能通过构造函数方法赋值
+        public CreateMenusCommand(
+              string name
+            , Guid? parentid
+            , string area
+            , string controller
+            , string action
+            , string url
+            , string alias
+            , string icon
+            , string description
+            , int status
+            , bool isdeleted
+            , bool isdefaultrouter
+            , DateTime createdtime
+            , Guid createdbyuserid
+            , DateTime modifiedtime
+            , Guid modifiedbyuserid
+            , bool iscache
+            , bool ishideinmenu
+            , string beforeclosefun
+            , long? sort
+            )
+        {
+            Name = name;
+            ParentId = parentid;
+            Area = area;
+            Controller = controller;
+            Action = action;
+            Url = url;
+            Alias = alias;
+            Icon = icon;
+            Description = description;
+            Status = status;
+            IsDeleted = isdeleted;
+            IsDefaultRouter = isdefaultrouter;
+            CreatedTime = createdtime;
+            CreatedByUserId = createdbyuserid;
+            ModifiedTime = modifiedtime;
+            ModifiedByUserId = modifiedbyuserid;
+            IsCache = iscache;
+            IsHideInMenu = ishideinmenu;
+            BeforeCloseFun = beforeclosefun;
+
+            Sort = sort;
+        }
+        public Guid Id { get; protected set; }
         /// <summary>
         /// 菜单名称
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; private set; }
         /// <summary>
         /// 父菜单Id
         /// </summary>
@@ -86,10 +137,21 @@ namespace AGooday.DncZero.Domain.Models
         /// 关闭前执行方法
         /// </summary>
         public string BeforeCloseFun { get; private set; }
+        /// <summary>
+        /// 排序
+        /// </summary>
+        public long? Sort { get; protected set; }
 
         /// <summary>
         /// 用户授权详情
         /// </summary>
         public virtual ICollection<Functions> Functions { get; private set; }
+        // 重写基类中的 是否有效 方法
+        // 主要是为了引入命令验证 CreateMenusCommandValidation。
+        public override bool IsValid()
+        {
+            ValidationResult = new CreateMenusCommandValidation().Validate(this);
+            return ValidationResult.IsValid;
+        }
     }
 }

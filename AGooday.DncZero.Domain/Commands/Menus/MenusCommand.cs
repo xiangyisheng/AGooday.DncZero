@@ -1,19 +1,19 @@
-﻿using AGooday.DncZero.Domain.Core.Models;
+﻿using AGooday.DncZero.Common.Enumerator;
+using AGooday.DncZero.Domain.Core.Commands;
+using AGooday.DncZero.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AGooday.DncZero.Domain.Models
+namespace AGooday.DncZero.Domain.Commands.Menus
 {
-    /// <summary>
-    /// 菜单
-    /// </summary>
-    public class Menus : SortableEntity<Guid, long>
+    public abstract class MenusCommand : Command
     {
+        public Guid Id { get; protected set; }
         /// <summary>
         /// 菜单名称
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; private set; }
         /// <summary>
         /// 父菜单Id
         /// </summary>
@@ -21,15 +21,15 @@ namespace AGooday.DncZero.Domain.Models
         /// <summary>
         /// 区域
         /// </summary>
-        public string Area { get; private set; }
+        public Guid Area { get; private set; }
         /// <summary>
         /// 控制器
         /// </summary>
-        public string Controller { get; private set; }
+        public Guid Controller { get; private set; }
         /// <summary>
         /// 动作
         /// </summary>
-        public string Action { get; private set; }
+        public Guid Action { get; private set; }
         /// <summary>
         /// Url地址
         /// </summary>
@@ -81,11 +81,15 @@ namespace AGooday.DncZero.Domain.Models
         /// <summary>
         /// 是否隐藏菜单
         /// </summary>
-        public bool IsHideInMenu { get; private set; }
+        public string IsHideInMenu { get; private set; }
         /// <summary>
         /// 关闭前执行方法
         /// </summary>
         public string BeforeCloseFun { get; private set; }
+        /// <summary>
+        /// 排序
+        /// </summary>
+        public long? Sort { get; protected set; }
 
         /// <summary>
         /// 用户授权详情

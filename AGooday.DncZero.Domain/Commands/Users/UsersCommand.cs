@@ -161,7 +161,7 @@ namespace AGooday.DncZero.Domain.Commands.Users
         /// <summary>
         /// 排序
         /// </summary>
-        public long? Sort { get; set; }
+        public long? Sort { get; protected set; }
 
         public ICollection<UserAuths> UserAuths { get; set; }
     }

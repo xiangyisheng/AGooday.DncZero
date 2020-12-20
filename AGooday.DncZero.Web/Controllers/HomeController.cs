@@ -14,7 +14,6 @@ namespace AGooday.DncZero.Web.Controllers
     [IgnoreAuth]
     public class HomeController : BaseController
     {
-        [AllowAnonymous]
         public IActionResult Index()
         {
             //若是HttpContext.User.Identity.IsAuthenticated为true，

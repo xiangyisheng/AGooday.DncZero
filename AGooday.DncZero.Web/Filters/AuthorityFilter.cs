@@ -16,13 +16,13 @@ namespace AGooday.DncZero.Web.Filters
     /// <summary>
     /// 权限验证
     /// </summary>
-    public class AuthorityFilter : ActionFilterAttribute
+    public class AuthorityFilter : IAuthorizationFilter
     {
         /// <summary>
         /// OnActionExecuting
         /// </summary>
         /// <param name="filterContext"></param>
-        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        public void OnAuthorization(AuthorizationFilterContext filterContext)
         {
             var isIgnored = filterContext.ActionDescriptor.FilterDescriptors.Any(f => f.Filter is IgnoreAuth);
             //var allowAnonymousAttribute = filterContext.ActionDescriptor.GetCustomAttributes(typeof(Microsoft.AspNetCore.Authorization.AllowAnonymousAttribute), false);
