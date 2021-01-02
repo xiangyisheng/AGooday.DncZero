@@ -25,9 +25,9 @@ namespace AGooday.DncZero.Web.Filters
         public void OnAuthorization(AuthorizationFilterContext filterContext)
         {
             var isIgnored = filterContext.ActionDescriptor.FilterDescriptors.Any(f => f.Filter is IgnoreAuth);
-            //var allowAnonymousAttribute = filterContext.ActionDescriptor.GetCustomAttributes(typeof(Microsoft.AspNetCore.Authorization.AllowAnonymousAttribute), false);
+            var allowAnonymousAttribute = filterContext.ActionDescriptor.EndpointMetadata.Any(item => item is Microsoft.AspNetCore.Authorization.AllowAnonymousAttribute);
             if (filterContext.HttpContext.User.Identity.IsAuthenticated) return;
-            if (isIgnored) return;
+            if (isIgnored || allowAnonymousAttribute) return;
 
             //注意：引用 Microsoft.Extensions.DependencyInjection
             //var authorityAppService = filterContext.HttpContext.RequestServices.GetService<IAuthorityAppService>();
