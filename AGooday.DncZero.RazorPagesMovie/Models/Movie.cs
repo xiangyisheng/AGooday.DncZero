@@ -17,7 +17,7 @@ namespace AGooday.DncZero.RazorPagesMovie.Models
 
         [Display(Name = "Release Date")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [Range(typeof(DateTime), "1966-1-1", "2021-1-1")]
+        //[Range(typeof(DateTime), "1966-1-1", "2021-1-1")]
         [DataType(DataType.Date)]
         public DateTime ReleaseDate { get; set; }
 
