@@ -41,11 +41,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AGooday.DncZero.RazorPagesM
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Blazor Webassembly", "Blazor Webassembly", "{B95035A0-4794-43B5-8253-FA9A4FD4F4F8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AGooday.DncZero.BlazorWasmSignalR.Server", "AGooday.DncZero.BlazorWasmSignalR\Server\AGooday.DncZero.BlazorWasmSignalR.Server.csproj", "{745B55C3-1085-4B88-ADF1-D4E18625EF1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AGooday.DncZero.BlazorWasmSignalR.Server", "AGooday.DncZero.BlazorWasmSignalR\Server\AGooday.DncZero.BlazorWasmSignalR.Server.csproj", "{745B55C3-1085-4B88-ADF1-D4E18625EF1E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AGooday.DncZero.BlazorWasmSignalR.Client", "AGooday.DncZero.BlazorWasmSignalR\Client\AGooday.DncZero.BlazorWasmSignalR.Client.csproj", "{BC024293-875D-43CF-ABA2-60FE5761AF28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AGooday.DncZero.BlazorWasmSignalR.Client", "AGooday.DncZero.BlazorWasmSignalR\Client\AGooday.DncZero.BlazorWasmSignalR.Client.csproj", "{BC024293-875D-43CF-ABA2-60FE5761AF28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AGooday.DncZero.BlazorWasmSignalR.Shared", "AGooday.DncZero.BlazorWasmSignalR\Shared\AGooday.DncZero.BlazorWasmSignalR.Shared.csproj", "{6D82B169-D967-4308-BE20-47A6BC884B91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AGooday.DncZero.BlazorWasmSignalR.Shared", "AGooday.DncZero.BlazorWasmSignalR\Shared\AGooday.DncZero.BlazorWasmSignalR.Shared.csproj", "{6D82B169-D967-4308-BE20-47A6BC884B91}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Quarzt", "Quarzt", "{389CEE38-BF4A-4026-A30E-C4133D8EF059}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AGooday.DncZero.Quarzt", "AGooday.DncZero.Quarzt\AGooday.DncZero.Quarzt.csproj", "{7C66467A-DC7D-43B3-A151-5CC13552C04C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -105,6 +109,10 @@ Global
 		{6D82B169-D967-4308-BE20-47A6BC884B91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D82B169-D967-4308-BE20-47A6BC884B91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D82B169-D967-4308-BE20-47A6BC884B91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C66467A-DC7D-43B3-A151-5CC13552C04C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C66467A-DC7D-43B3-A151-5CC13552C04C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C66467A-DC7D-43B3-A151-5CC13552C04C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C66467A-DC7D-43B3-A151-5CC13552C04C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -126,6 +134,8 @@ Global
 		{745B55C3-1085-4B88-ADF1-D4E18625EF1E} = {B95035A0-4794-43B5-8253-FA9A4FD4F4F8}
 		{BC024293-875D-43CF-ABA2-60FE5761AF28} = {B95035A0-4794-43B5-8253-FA9A4FD4F4F8}
 		{6D82B169-D967-4308-BE20-47A6BC884B91} = {B95035A0-4794-43B5-8253-FA9A4FD4F4F8}
+		{389CEE38-BF4A-4026-A30E-C4133D8EF059} = {2AD52C05-2D39-4AE5-8EE0-89DAE82AAF00}
+		{7C66467A-DC7D-43B3-A151-5CC13552C04C} = {389CEE38-BF4A-4026-A30E-C4133D8EF059}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D3DD1692-E8B9-44A4-A3D6-B99DDCB73548}
